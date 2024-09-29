@@ -12,12 +12,12 @@ export const AnnouncScript = () => {
     }, []);
 
     const fetchAnnouncements = async () => {
-        const response = await axios.get('http://127.0.0.1:5000/announcements');
+        const response = await axios.get('api/announcements');
         setAnnouncements(response.data);
     };
 
     const createAnnouncement = async () => {
-        await axios.post('http://127.0.0.1:5000/announcements', { title, description });
+        await axios.post('api/announcements', { title, description });
         fetchAnnouncements();
         setTitle('');
         setDescription('');
@@ -28,7 +28,7 @@ export const AnnouncScript = () => {
             alert('Пожалуйста, введите id объявления для удаления.');
             return;
         }
-        await axios.delete(`http://127.0.0.1:5000/announcements/${deleteId}`);
+        await axios.delete(`api/announcements/${deleteId}`);
         fetchAnnouncements();
         setDeleteId('');
     };
