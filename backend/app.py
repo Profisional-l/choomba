@@ -13,6 +13,8 @@ def get_db_connection():
 def init_db():
     connection = get_db_connection()
     cursor = connection.cursor()
+    
+    # Создаем таблицу, если она не существует
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS Announcements (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -20,6 +22,14 @@ def init_db():
         description TEXT NOT NULL
     )
     ''')
+    
+    # Проверяем, существует ли столбец user_ids
+    cursor.execute("PRAGMA table_info(Announcements)")
+    columns = [column[1] for column in cursor.fetchall()]
+    
+    if 'user_ids' not in columns:
+        cursor.execute("ALTER TABLE Announcements ADD COLUMN user_ids INTEGER")
+    
     connection.commit()
     connection.close()
 
@@ -29,6 +39,14 @@ def send_userid():
         data = request.json
         user_id = data.get('userID')
         print(f"Received UserID: {user_id}")
+
+        # Обновляем существующее объявление, добавляя user_id
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        cursor.execute('UPDATE Announcements SET user_ids = ? WHERE id = (SELECT MAX(id) FROM Announcements)', (user_id,))
+        connection.commit()
+        connection.close()
+
         return jsonify({"status": "success", "userID": user_id})
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
@@ -40,11 +58,14 @@ def handle_announcements():
             data = request.json
             title = data.get('title')
             description = data.get('description')
+            user_id = data.get('userID')  # Получаем userID из данных
+
             if not title or not description:
                 return jsonify({"status": "error", "message": "Title and description are required"}), 400
+            
             connection = get_db_connection()
             cursor = connection.cursor()
-            cursor.execute('INSERT INTO Announcements (title, description) VALUES (?, ?)', (title, description))
+            cursor.execute('INSERT INTO Announcements (title, description, user_ids) VALUES (?, ?, ?)', (title, description, user_id))
             connection.commit()
             connection.close()
             return jsonify({'message': 'Announcement created!'}), 201
@@ -54,7 +75,7 @@ def handle_announcements():
             cursor.execute('SELECT * FROM Announcements')
             announcements = cursor.fetchall()
             connection.close()
-            return jsonify([{'id': a['id'], 'title': a['title'], 'description': a['description']} for a in announcements])
+            return jsonify([{'id': a['id'], 'title': a['title'], 'description': a['description'], 'user_ids': a['user_ids']} for a in announcements])
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
 
@@ -73,3 +94,4 @@ def delete_announcement(id):
 if __name__ == '__main__':
     init_db()
     app.run(host='0.0.0.0', port=5000)
+

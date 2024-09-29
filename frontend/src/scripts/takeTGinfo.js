@@ -25,7 +25,30 @@ const useUserData = () => {
     // Обработка ответа от сервера
   };
 
-  return userData;
+  const handleCreateAnnouncement = async (title, description) => {
+    if (!userData) {
+      console.error("User data is not available");
+      return;
+    }
+
+    const response = await fetch('http://localhost:5000/announcements', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title,
+        description,
+        userID: userData.id // Добавляем userID в данные объявления
+      }),
+    });
+
+    const data = await response.json();
+    console.log(data);
+    // Обработка ответа от сервера
+  };
+
+  return { userData, handleCreateAnnouncement };
 };
 
 export default useUserData;
