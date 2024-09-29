@@ -5,5 +5,5 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-# Запускать команды параллельно
-CMD ["sh", "-c", "python app.py & python choomba_bot.py"]
+CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
