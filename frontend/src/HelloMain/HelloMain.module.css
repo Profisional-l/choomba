@@ -1,0 +1,43 @@
+
+.helloTXT_cont {
+    padding: 0;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    margin-top: -25px;
+    font-size: 13px;
+  }
+  .findyours_cont {
+    max-width: fit-content;
+    margin: auto ;
+    font-size: 13px;
+    margin-top: 25px;
+  }
+  
+  .DownArrow_cont {
+    text-align: center;
+  }
+  
+  .DownArrow {
+    position: absolute;
+    max-width: 17px;
+    animation: UpAndDown 2.3s infinite;
+    margin-top: 0px;
+    margin-left: -9px;
+  }
+  
+  
+  @keyframes UpAndDown {
+    0% {
+      margin-top: 0px;
+    }
+  
+    50% {
+      margin-top: 12px;
+    }
+  
+    100% {
+      margin-top: 0px;
+    }
+  }
