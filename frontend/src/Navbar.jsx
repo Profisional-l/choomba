@@ -5,7 +5,7 @@ import FindAnsPage from "./FindAnsPage.jsx";
 import addpng from "./assets/add.png";
 import layerspng from "./assets/layers.png";
 import profilepng from "./assets/profile.png";
-import Creat from "./Create.jsx";
+import Create from "./Create.jsx";
 
 const Navbar = () => {
   return (
@@ -15,7 +15,7 @@ const Navbar = () => {
           <Routes>
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/" element={<Announcements />} />
-            <Route path="/create" element={<Creat />} />
+            <Route path="/create" element={<Create />} />
           </Routes>
         </div>
         <div className="navbar">

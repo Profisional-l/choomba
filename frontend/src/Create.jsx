@@ -1,26 +1,15 @@
 import React from 'react';
-import { AnnouncScript } from './scripts/announcScript';
+import HelloCreate from './HelloCreate/HelloCreate.jsx';
+import CreateField from './CreateField/CreateField.jsx';
 
-const Creat = () => {
-  const { announcements, createAnnouncement, setTitle, setDescription } = AnnouncScript(); 
+const Create = () => {
 
   return (
     <div>
-      <h2>Создать объявление</h2>
-      <input 
-          type="text" 
-          placeholder="Заголовок" 
-          value={announcements.title} 
-          onChange={(e) => setTitle(e.target.value)} 
-      />
-      <input 
-          placeholder="Описание" 
-          value={announcements.description} 
-          onChange={(e) => setDescription(e.target.value)} 
-      />
-      <button onClick={createAnnouncement}>Создать объявление</button>
+      <HelloCreate/>
+      <CreateField/>
     </div>
   );
 };
 
-export default Creat;
+export default Create;
