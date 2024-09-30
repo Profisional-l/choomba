@@ -4,6 +4,9 @@ import WebApp from "@twa-dev/sdk";
 const useUserData = () => {
   const [userData, setUserData] = useState(null);
 
+  const isLocal = window.location.hostname === 'localhost';
+    const API_URL = isLocal ? 'http://localhost:5000' : '/api';
+
   useEffect(() => {
     if (WebApp.initDataUnsafe.user) {
       setUserData(WebApp.initDataUnsafe.user);
@@ -12,7 +15,7 @@ const useUserData = () => {
   }, []);
 
   const handleSendUserID = async (userID) => {
-    const response = await fetch('http://localhost:5000/send_userid', {
+    const response = await fetch(`${API_URL}/send_userid`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
