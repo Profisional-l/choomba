@@ -9,7 +9,7 @@ export const AnnouncScript = () => {
 
     // Определяем базовый URL в зависимости от среды
     const isLocal = window.location.hostname === 'localhost';
-    const API_URL = isLocal ? 'http://localhost:5000' : 'api';
+    const API_URL = isLocal ? 'http://localhost:5000' : '.';
 
     useEffect(() => {
         fetchAnnouncements();
