@@ -4,6 +4,11 @@ import WebApp from "@twa-dev/sdk";
 const useUserData = () => {
   const [userData, setUserData] = useState(null);
 
+  
+    // Определяем базовый URL в зависимости от среды
+    const isLocal = window.location.hostname === 'localhost';
+    const API_URL = isLocal ? 'http://localhost:5000' : 'api';
+
   useEffect(() => {
     if (WebApp.initDataUnsafe.user) {
       setUserData(WebApp.initDataUnsafe.user);
@@ -12,17 +17,16 @@ const useUserData = () => {
   }, []);
 
   const handleSendUserID = async (userID) => {
-    const response = await fetch('http://localhost:5000/send_userid', {
+    const response = await fetch(`${API_URL}/send_userid`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ userID }), // Отправляем userID
+      body: JSON.stringify({ userID }), 
     });
 
     const data = await response.json();
     console.log(data);
-    // Обработка ответа от сервера
   };
 
   const handleCreateAnnouncement = async (title, description) => {
@@ -31,7 +35,7 @@ const useUserData = () => {
       return;
     }
 
-    const response = await fetch('http://localhost:5000/announcements', {
+    const response = await fetch(`${API_URL}/announcements`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
