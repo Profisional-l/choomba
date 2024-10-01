@@ -17,8 +17,8 @@ def init_db():
     CREATE TABLE IF NOT EXISTS Announcements (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
-        description TEXT NOT NULL,         
-        )
+        description TEXT NOT NULL
+    )
     ''')
     connection.commit()
     connection.close()
@@ -29,8 +29,6 @@ def send_userid():
         data = request.json
         user_id = data.get('userID')
         print(f"Received UserID: {user_id}")
-
-
         return jsonify({"status": "success", "userID": user_id})
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
@@ -42,14 +40,11 @@ def handle_announcements():
             data = request.json
             title = data.get('title')
             description = data.get('description')
-            user_id = data.get('userID')  # Получаем userID из данных
-
             if not title or not description:
                 return jsonify({"status": "error", "message": "Title and description are required"}), 400
-            
             connection = get_db_connection()
             cursor = connection.cursor()
-            cursor.execute('INSERT INTO Announcements (title, description, user_ids) VALUES (?, ?, ?)', (title, description, user_id))
+            cursor.execute('INSERT INTO Announcements (title, description) VALUES (?, ?)', (title, description))
             connection.commit()
             connection.close()
             return jsonify({'message': 'Announcement created!'}), 201
@@ -59,7 +54,7 @@ def handle_announcements():
             cursor.execute('SELECT * FROM Announcements')
             announcements = cursor.fetchall()
             connection.close()
-            return jsonify([{'id': a['id'], 'title': a['title'], 'description': a['description'], 'user_ids': a['user_ids']} for a in announcements])
+            return jsonify([{'id': a['id'], 'title': a['title'], 'description': a['description']} for a in announcements])
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
 
@@ -78,4 +73,3 @@ def delete_announcement(id):
 if __name__ == '__main__':
     init_db()
     app.run(host='0.0.0.0', port=5000)
-
