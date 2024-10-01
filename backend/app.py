@@ -24,15 +24,15 @@ def init_db():
     connection.commit()
     connection.close()
 
-# @app.route('/send_userid', methods=['POST'])
-# def send_userid():
-#     try:
-#         data = request.json
-#         user_id = data.get('userID')
-#         print(f"Received UserID: {user_id}")
-#         return jsonify({"status": "success", "userID": user_id})
-#     except Exception as e:
-#         return jsonify({"status": "error", "message": str(e)}), 400
+@app.route('/send_userid', methods=['POST'])
+def send_userid():
+    try:
+        data = request.json
+        user_id = data.get('userID')
+        print(f"Received UserID: {user_id}")
+        return jsonify({"status": "success", "userID": user_id})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
 
 @app.route('/announcements', methods=['GET', 'POST'])
 def handle_announcements():
