@@ -1,15 +1,17 @@
 import React from 'react';
 import { AnnouncScript } from '../scripts/announcScript.js';
 import styles from  './CreateField.module.css';
-import { userName } from '../scripts/takeTGinfo.js';
+import useUserData from '../scripts/takeTGinfo.js'; 
 
 
 const CreateField = () => {
     const { announcements, createAnnouncement, setTitle, setDescription } = AnnouncScript(); 
-  
+    const userData = useUserData();
+
     return (
       <div className={styles.CreatField}>
         <h2>Создать объявление</h2>
+        <h1>Welcome, {userData.username}!</h1>
         {/* <input 
             className={styles.category_input}
             type="text" 
@@ -23,7 +25,7 @@ const CreateField = () => {
             value={announcements.description} 
             onChange={(e) => {
               setDescription(e.target.value);
-              setTitle(userName);
+              setTitle(userData.username);
           }}
                   />
         
