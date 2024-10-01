@@ -17,7 +17,8 @@ def init_db():
     CREATE TABLE IF NOT EXISTS Announcements (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
-        description TEXT NOT NULL
+        description TEXT NOT NULL,
+        category TEXT NOT NULL  -- Добавляем новый столбец для категории
     )
     ''')
     connection.commit()
@@ -40,11 +41,12 @@ def handle_announcements():
             data = request.json
             title = data.get('title')
             description = data.get('description')
-            if not title or not description:
-                return jsonify({"status": "error", "message": "Title and description are required"}), 400
+            category = data.get('category')  # Получаем категорию из запроса
+            if not title or not description or not category:
+                return jsonify({"status": "error", "message": "Title, description, and category are required"}), 400
             connection = get_db_connection()
             cursor = connection.cursor()
-            cursor.execute('INSERT INTO Announcements (title, description) VALUES (?, ?)', (title, description))
+            cursor.execute('INSERT INTO Announcements (title, description, category) VALUES (?, ?, ?)', (title, description, category))
             connection.commit()
             connection.close()
             return jsonify({'message': 'Announcement created!'}), 201
@@ -54,7 +56,7 @@ def handle_announcements():
             cursor.execute('SELECT * FROM Announcements')
             announcements = cursor.fetchall()
             connection.close()
-            return jsonify([{'id': a['id'], 'title': a['title'], 'description': a['description']} for a in announcements])
+            return jsonify([{'id': a['id'], 'title': a['title'], 'description': a['description'], 'category': a['category']} for a in announcements])
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
 

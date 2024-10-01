@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-
 export const AnnouncScript = () => {
     const [announcements, setAnnouncements] = useState([]);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [category, setCategory] = useState(''); // Состояние для категории
     const [deleteId, setDeleteId] = useState('');
 
     // Определяем базовый URL в зависимости от среды
@@ -22,10 +22,11 @@ export const AnnouncScript = () => {
     };
 
     const createAnnouncement = async () => {
-        await axios.post(`${API_URL}/announcements`, { title, description });
+        await axios.post(`${API_URL}/announcements`, { title, description, category }); // Отправляем категорию
         fetchAnnouncements();
         setTitle('');
         setDescription('');
+        setCategory(''); // Сбрасываем категорию
     };
 
     const deleteAnnouncement = async () => {
@@ -38,5 +39,5 @@ export const AnnouncScript = () => {
         setDeleteId('');
     };
 
-    return { announcements, createAnnouncement, deleteAnnouncement, setTitle, setDescription, setDeleteId };
+    return { announcements, createAnnouncement, deleteAnnouncement, setTitle, setDescription, setCategory, setDeleteId };
 };
