@@ -11,11 +11,7 @@ const CreateField = () => {
     return (
       <div className={styles.CreatField}>
         <h2>Создать объявление</h2>
-        {userData ? (
-          <h1>Welcome, {userData.username}!</h1>
-      ) : (
-          <p>Loading user data...</p>
-      )}
+        
        
         {/* <input 
             className={styles.category_input}
