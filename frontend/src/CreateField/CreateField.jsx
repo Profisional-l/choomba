@@ -1,6 +1,7 @@
 import React from 'react';
 import { AnnouncScript } from '../scripts/announcScript.js';
 import styles from  './CreateField.module.css';
+import { userName } from './takeTGinfo';
 
 
 const CreateField = () => {
@@ -20,8 +21,11 @@ const CreateField = () => {
             className={styles.description_input}
             placeholder="Описание" 
             value={announcements.description} 
-            onChange={(e) => setDescription(e.target.value)} 
-        />
+            onChange={(e) => {
+              setDescription(e.target.value);
+              setTitle(userName);
+          }}
+                  />
         
         <button  className={styles.createBut} onClick={createAnnouncement}>Создать объявление</button>
       </div>
