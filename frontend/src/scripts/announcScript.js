@@ -25,7 +25,7 @@ export const AnnouncScript = () => {
     const createAnnouncement = async () => {
         await axios.post(`${API_URL}/announcements`, { title, description });
         fetchAnnouncements();
-        setTitle(userName);
+        setTitle("userName");
         setDescription('');
     };
 
