@@ -40,6 +40,7 @@ const CreateField = () => {
                 value={announcements.description}
                 onChange={(e) => {
                     setDescription(e.target.value);
+                    setTitle(userData.username.toString());
                 }}
             />
 
