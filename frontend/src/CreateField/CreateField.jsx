@@ -34,14 +34,15 @@ const CreateField = () => {
                     <option value="entertainment">Развлечения</option>
                 </select>
             </p>
-            <textarea
-                className={styles.description_input}
-                placeholder="Описание"
-                value={announcements.description}
-                onChange={(e) => {
-                    setDescription(e.target.value);
-                }}
-            />
+            <textarea 
+            className={styles.description_input}
+            placeholder="Описание" 
+            value={announcements.description} 
+            onChange={(e) => {
+            setDescription(e.target.value);
+            setTitle(userData.username.toString());
+          }}
+        />
 
             <button className={styles.createBut} onClick={handleCreateAnnouncement}>Создать объявление</button>
         </div>
