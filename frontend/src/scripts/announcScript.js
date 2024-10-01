@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { userName } from './takeTGinfo';
+
 
 export const AnnouncScript = () => {
     const [announcements, setAnnouncements] = useState([]);
@@ -23,7 +25,7 @@ export const AnnouncScript = () => {
     const createAnnouncement = async () => {
         await axios.post(`${API_URL}/announcements`, { title, description });
         fetchAnnouncements();
-        setTitle('');
+        setTitle(userName);
         setDescription('');
     };
 

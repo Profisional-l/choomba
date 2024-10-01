@@ -9,13 +9,13 @@ const CreateField = () => {
     return (
       <div className={styles.CreatField}>
         <h2>Создать объявление</h2>
-        <input 
+        {/* <input 
             className={styles.category_input}
             type="text" 
             placeholder="Заголовок" 
             value={announcements.title} 
             onChange={(e) => setTitle(e.target.value)} 
-        />  
+        />   */}
         <textarea 
             className={styles.description_input}
             placeholder="Описание" 

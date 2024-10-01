@@ -13,7 +13,7 @@ const useUserData = () => {
       handleSendUserID(WebApp.initDataUnsafe.user.id); // Отправляем userID сразу после загрузки
     }
   }, []);
-
+  
   const handleSendUserID = async (userID) => {
     const response = await fetch(`${API_URL}/send_userid`, {
       method: 'POST',
@@ -30,5 +30,5 @@ const useUserData = () => {
 
   return userData;
 };
-
+export const userName = WebApp.userData.username;
 export default useUserData;
