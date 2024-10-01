@@ -1,7 +1,7 @@
 import React from 'react';
 import { AnnouncScript } from '../scripts/announcScript.js';
 import styles from  './CreateField.module.css';
-import { userName } from './takeTGinfo';
+import { userName } from '../scripts/takeTGinfo.js';
 
 
 const CreateField = () => {
