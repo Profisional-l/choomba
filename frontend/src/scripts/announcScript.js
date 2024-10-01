@@ -25,7 +25,7 @@ export const AnnouncScript = () => {
     };
 
     const createAnnouncement = async () => {
-        if (!title || !description) {
+        if (!description) {
             alert('Пожалуйста, заполните все поля.');
             return;
         }
