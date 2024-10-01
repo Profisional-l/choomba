@@ -30,5 +30,5 @@ const useUserData = () => {
 
   return userData;
 };
-export const userName = WebApp.initDataUnsafe.username;
+// export const userName = WebApp.initDataUnsafe.username;
 export default useUserData;

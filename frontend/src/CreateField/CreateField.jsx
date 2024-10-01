@@ -11,7 +11,12 @@ const CreateField = () => {
     return (
       <div className={styles.CreatField}>
         <h2>Создать объявление</h2>
-        <h1>Welcome, {userData.username}!</h1>
+        {userData ? (
+          <h1>Welcome, {userData.username}!</h1>
+      ) : (
+          <p>Loading user data...</p>
+      )}
+       
         {/* <input 
             className={styles.category_input}
             type="text" 
@@ -24,10 +29,10 @@ const CreateField = () => {
             placeholder="Описание" 
             value={announcements.description} 
             onChange={(e) => {
-              setDescription(e.target.value);
-              setTitle(userData.username);
+            setDescription(e.target.value);
+            setTitle(userData.username.toString());
           }}
-                  />
+        />
         
         <button  className={styles.createBut} onClick={createAnnouncement}>Создать объявление</button>
       </div>
