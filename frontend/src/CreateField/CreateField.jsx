@@ -20,12 +20,6 @@ const CreateField = () => {
     return (
         <div className={styles.CreatField}>
             <h2>Создать объявление</h2>
-            {userData ? (
-                <h1>Welcome, {userData.username}!</h1>
-            ) : (
-                <p>Loading user data...</p>
-            )}
-
             <p>
                 <select value={selectedCategory} onChange={handleCategoryChange}>
                     <option disabled value="">Выберите категорию</option>
