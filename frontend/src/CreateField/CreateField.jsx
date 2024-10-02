@@ -6,11 +6,20 @@ import useUserData from '../scripts/takeTGinfo.js';
 const CreateField = () => {
     const { announcements, createAnnouncement, setTitle, setDescription, setCategory } = AnnouncScript();
     const userData = useUserData();
-    const [selectedCategory, setSelectedCategory] = useState(''); // Состояние для выбранной категории
+    const [selectedCategory, setSelectedCategoryState] = useState('');  // Локальный стейт для выбранной категории
+    const [isModalOpen, setIsModalOpen] = useState(false);  // Стейт для открытия/закрытия модального окна
+  
+    const categories = [
+      { value: 'sport', label: 'Спорт' },
+      { value: 'computerGames', label: 'Компьютерные игры' },
+      { value: 'entertainment', label: 'Развлечения' }
+    ];
 
-    const handleCategoryChange = (event) => {
-        setSelectedCategory(event.target.value);
-        setCategory(event.target.value); // Устанавливаем категорию в AnnouncScript
+    // Функция для изменения выбранной категории
+    const handleCategoryChange = (category) => {
+      setSelectedCategoryState(category);  // Установка локальной категории
+      setCategory(category);  // Сохранение выбранной категории в скрипт
+      setIsModalOpen(false);  // Закрытие модального окна после выбора
     };
 
     const handleCreateAnnouncement = async () => {
@@ -20,25 +29,45 @@ const CreateField = () => {
     return (
         <div className={styles.CreatField}>
             <h2>Создать объявление</h2>
-            <p>
-                <select value={selectedCategory} onChange={handleCategoryChange}>
-                    <option disabled value="">Выберите категорию</option>
-                    <option value="sport">Спорт</option>
-                    <option value="computerGames">Компьютерные игры</option>
-                    <option value="entertainment">Развлечения</option>
-                </select>
-            </p>
+
+            {/* Кнопка выбора категории и модальное окно */}
+            <div className={styles.Selector_Cont}>
+                <button className={styles.select_button} onClick={() => setIsModalOpen(true)}>
+                    {selectedCategory ? `Категория: ${selectedCategory}` : 'Выберите категорию'}
+                </button>
+                {isModalOpen && (
+                    <div className={styles.modal}>
+                        <div className={styles.modal_content}>
+                            <ul>
+                                <h3>Выберите категорию:</h3> <br />
+                                {categories.map((category) => (
+                                    <li key={category.value} onClick={() => handleCategoryChange(category.label)}>
+                                        {category.label}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        {/* Область вне модального окна для закрытия */}
+                        <div className={styles.modal_overlay} onClick={() => setIsModalOpen(false)} />
+                    </div>
+                )}
+            </div>
+
+            {/* Поле для ввода описания */}
             <textarea
                 className={styles.description_input}
                 placeholder="Описание"
                 value={announcements.description}
                 onChange={(e) => {
-                    setDescription(e.target.value);
-                    setTitle(userData.username.toString());
+                    setDescription(e.target.value);  // Установка описания
+                    setTitle(userData.username.toString());  // Установка имени пользователя как заголовка
                 }}
             />
 
-            <button className={styles.createBut} onClick={handleCreateAnnouncement}>Создать объявление</button>
+            {/* Кнопка для создания объявления */}
+            <button className={styles.createBut} onClick={handleCreateAnnouncement}>
+                Создать объявление
+            </button>
         </div>
     );
 };
