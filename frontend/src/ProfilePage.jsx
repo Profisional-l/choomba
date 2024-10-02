@@ -6,10 +6,14 @@ const ProfilePage = () => {
   const { deleteAnnouncement, setDeleteId } = AnnouncScript(); 
   const userData = useUserData();
   const [userAnnouncements, setUserAnnouncements] = useState([]);
+  const [deleteId, setDeleteIdState] = useState(''); // Добавлено состояние для deleteId
+
+  const isLocal = window.location.hostname === 'localhost';
+  const API_URL = isLocal ? 'http://localhost:5000' : '/api';
 
   useEffect(() => {
     if (userData) {
-      fetch(`http://localhost:5000/announcements/user/${userData.username}`)
+      fetch(`${API_URL}/announcements/user/${userData.username}`)
         .then(response => response.json())
         .then(data => {
           if (Array.isArray(data)) {
@@ -60,13 +64,15 @@ const ProfilePage = () => {
       <input 
           type="text" 
           placeholder="id" 
-          value={announcements.deleteId} 
-          onChange={(e) => setDeleteId(e.target.value)} 
+          value={deleteId} // Используем deleteId из состояния
+          onChange={(e) => setDeleteIdState(e.target.value)} // Обновляем состояние deleteId
       />
-      <button onClick={deleteAnnouncement}>Удалить объявление</button>
+      <button onClick={() => {
+        setDeleteId(deleteId); // Устанавливаем deleteId в AnnouncScript
+        deleteAnnouncement(); // Вызываем функцию удаления
+      }}>Удалить объявление</button>
     </div>
   );
 };
 
 export default ProfilePage;
-
