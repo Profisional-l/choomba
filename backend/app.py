@@ -60,6 +60,18 @@ def handle_announcements():
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
 
+@app.route('/announcements/user/<string:username>', methods=['GET'])
+def get_user_announcements(username):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        cursor.execute('SELECT * FROM Announcements WHERE title = ?', (username,))
+        announcements = cursor.fetchall()
+        connection.close()
+        return jsonify([{'id': a['id'], 'title': a['title'], 'description': a['description'], 'category': a['category']} for a in announcements])
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
+
 @app.route('/announcements/<int:id>', methods=['DELETE'])
 def delete_announcement(id):
     try:
