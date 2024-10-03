@@ -1,4 +1,3 @@
-// MainScreen.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AnnouncScript } from './scripts/announcScript.js';
@@ -14,15 +13,17 @@ const MainScreen = () => {
             <div style={{ marginTop: "40px", marginBottom: "40px" }}>
                 <div>
                     {announcements.map((announcement) => (
-                        <div className='annCard' key={announcement.id}>
-                            <Link to={{
-                                pathname: '/annpage',
-                                state: { announcement }
-                            }}>
+                        <Link 
+                            className='link' 
+                            to="/annpage" 
+                            state={{ announcement }}
+                            key={announcement.id}
+                        >
+                            <div className='annCard'>
                                 <h2>@{announcement.title} - {announcement.description} | {announcement.category} - {announcement.subcategory}</h2>
-                            </Link>
-                            <p className='CardId'>id: {announcement.id}</p>
-                        </div>
+                                <p className='CardId'>id: {announcement.id}</p>
+                            </div>
+                        </Link>
                     ))}
                 </div>
                 <ul style={{ textAlign: 'left' }}>
@@ -34,4 +35,3 @@ const MainScreen = () => {
 };
 
 export default MainScreen;
-

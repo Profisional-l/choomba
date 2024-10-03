@@ -1,10 +1,9 @@
-// AnnPage.jsx
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
 const AnnPage = () => {
     const location = useLocation();
-    const { announcement } = location.state || {};
+    const { announcement } = location.state || {}; // Получаем переданное объявление
 
     if (!announcement) {
         return <div>Объявление не найдено.</div>;
@@ -22,3 +21,4 @@ const AnnPage = () => {
 };
 
 export default AnnPage;
+
