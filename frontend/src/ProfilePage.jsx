@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { AnnouncScript } from './scripts/announcScript.js';
-import useUserData from './scripts/takeTGinfo.js'; 
+import React, { useEffect, useState } from "react";
+import { AnnouncScript } from "./scripts/announcScript.js";
+import useUserData from "./scripts/takeTGinfo.js";
+import trashpng from "./assets/trash.png";
 
 const ProfilePage = () => {
-  const { deleteAnnouncement, setDeleteId } = AnnouncScript(); 
+  const { deleteAnnouncement } = AnnouncScript();
   const userData = useUserData();
   const [userAnnouncements, setUserAnnouncements] = useState([]);
+  const [deleteId, setDeleteId] = useState("");
+  const [selectedId, setSelectedId] = useState(null); // Состояние для хранения выбранного ID
 
-  const isLocal = window.location.hostname === 'localhost';
-  const API_URL = isLocal ? 'http://localhost:5000' : '/api';
+  const isLocal = window.location.hostname === "localhost";
+  const API_URL = isLocal ? "http://localhost:5000" : "/api";
 
   useEffect(() => {
     if (userData) {
@@ -25,31 +28,70 @@ const ProfilePage = () => {
     }
   }, [userData]);
 
+  const handleDelete = async (id) => {
+    await deleteAnnouncement(id);
+    setUserAnnouncements((prevAnnouncements) =>
+      prevAnnouncements.filter((announcement) => announcement.id !== id)
+    );
+    // Сбрасываем выбранный ID, если удаляемое объявление совпадает
+    if (selectedId === id) {
+      setSelectedId(null);
+    }
+  };
+
+  const handleDeleteById = async () => {
+    if (!deleteId) {
+      alert("Пожалуйста, введите id объявления.");
+      return;
+    }
+    await handleDelete(Number(deleteId));
+    setDeleteId("");
+  };
+
+  const handleSelect = (id) => {
+    setSelectedId(id); // Обновляем выбранный ID при нажатии кнопки
+  };
+
   return (
     <div>
-      <h1>Profile Page</h1>
-      <hr /><br />
       <div>
         {userData ? (
           <div>
-            <h1>Welcome, {userData.first_name}!</h1>
-            <p>Username: {userData.username}</p>
-            <p>UserID: {userData.id}</p>
-            <p>Language: {userData.language_code}</p>
-            {userData.is_premium && <p>You are a premium user!</p>}
-            {!userData.is_premium && <p>Без премиума</p>}
+            <h2>{userData.username}, ку! 👋</h2>
           </div>
         ) : (
-          <p>Loading user data...</p>
+          <p>Loading . . .</p>
         )}
         <div style={{ marginTop: "40px", marginBottom: "40px" }}>
-          <p>Ваши объявления:</p><br/>
+          <h2>Твои объявления:</h2>
+          <br />
           {userAnnouncements.length > 0 ? (
             <div>
               {userAnnouncements.map((announcement) => (
-                <div className='annCard' key={announcement.id}>
-                  <h2>@{announcement.title} - {announcement.description} | {announcement.category}</h2>
-                  <p className='CardId'>id: {announcement.id}</p>
+                <div
+                  className={`annCard ${
+                    selectedId === announcement.id ? "active" : ""
+                  }`} // Условный класс
+                  key={announcement.id}
+                >
+                  <h2>
+                    @{announcement.title} - {announcement.description} |
+                    {announcement.category}
+                  </h2>
+                  <br />
+
+                  <p className="CardId">
+                    <button
+                      className="delet_but"
+                      onClick={() => {
+                        handleSelect(announcement.id); // Выбор ID при нажатии
+                        handleDelete(announcement.id); // Удаление объявления
+                      }}
+                    >
+                      Удалить <img src={trashpng} alt="" />
+                    </button>
+                    id: {announcement.id}
+                  </p>
                 </div>
               ))}
             </div>
@@ -57,17 +99,21 @@ const ProfilePage = () => {
             <p>Нет объявлений.</p>
           )}
         </div>
+
+        <div style={{ marginTop: "40px" }}>
+          <h2>Удалить объявление по ID:</h2>
+          <input
+            type="text"
+            value={deleteId}
+            onChange={(e) => setDeleteId(e.target.value)}
+            placeholder="Введите ID объявления"
+          />
+          <button onClick={handleDeleteById}>Удалить по ID</button>
+        </div>
       </div>
-      <br /><hr /><br />
-      <h2>Удалить объявление по ID:</h2>
-      <input 
-          type="text" 
-          placeholder="id" 
-          onChange={(e) => setDeleteId(e.target.value)} // Используем setDeleteId из AnnouncScript
-      />
-      <button onClick={() => {
-        deleteAnnouncement(); // Вызываем функцию удаления
-      }}>Удалить объявление</button>
+      <br />
+      <hr />
+      <br />
     </div>
   );
 };

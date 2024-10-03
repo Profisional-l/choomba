@@ -5,11 +5,10 @@ export const AnnouncScript = () => {
     const [announcements, setAnnouncements] = useState([]);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [category, setCategory] = useState(''); // Состояние для категории
-    const [subCategory, setSubCategory] = useState(''); // Состояние для подкатегории
+    const [category, setCategory] = useState('');
+    const [subCategory, setSubCategory] = useState('');
     const [deleteId, setDeleteId] = useState('');
 
-    // Определяем базовый URL в зависимости от среды
     const isLocal = window.location.hostname === 'localhost';
     const API_URL = isLocal ? 'http://localhost:5000' : '/api';
 
@@ -24,25 +23,23 @@ export const AnnouncScript = () => {
 
     const createAnnouncement = async () => {
         try {
-            await axios.post(`${API_URL}/announcements`, { title, description, category, subCategory }); // Отправляем категорию и подкатегорию
+            await axios.post(`${API_URL}/announcements`, { title, description, category, subCategory });
             fetchAnnouncements();
             setTitle('');
             setDescription('');
             setCategory('');
-            setSubCategory(''); // Сбрасываем подкатегорию
+            setSubCategory('');
         } catch (error) {
             console.error('Ошибка при создании объявления:', error);
         }
     };
 
-    const deleteAnnouncement = async () => {
-        if (!deleteId) {
-            alert('Пожалуйста, введите id объявления для удаления.');
-            return;
+    const deleteAnnouncement = async (id) => {
+        try {
+            await axios.delete(`${API_URL}/announcements/${id}`);
+        } catch (error) {
+            console.error('Ошибка при удалении объявления:', error);
         }
-        await axios.delete(`${API_URL}/announcements/${deleteId}`);
-        fetchAnnouncements();
-        setDeleteId('');
     };
 
     return { 
@@ -52,7 +49,7 @@ export const AnnouncScript = () => {
         setTitle, 
         setDescription, 
         setCategory, 
-        setSubCategory, // Добавляем setSubCategory
+        setSubCategory, 
         setDeleteId 
     };
 };

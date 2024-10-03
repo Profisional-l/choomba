@@ -130,7 +130,43 @@ input:hover {
 }
 
 .CardId {
-  opacity: .33;
-  margin-bottom: -3px;
+  opacity: .7;
+  margin-bottom: 2px;
+  margin-right: 3px;
   text-align: end;
+}
+
+.deleted {
+  opacity: 0.5; /* Уменьшаем непрозрачность */
+  text-decoration: line-through; /* Перечеркиваем текст */
+}
+
+.annCard.active {
+  opacity: 0;
+  background-color: rgba(94, 0, 0, 0.699);
+}
+
+.delet_but {
+  opacity: .55;
+  font-size: 17px;
+  height: 30px;
+  margin-bottom: 0px;
+  margin-right: 13px;
+  background-color: #000000;
+  color: #FF3645;
+  width: 105px;
+  text-align: left;
+  border:  2px solid #FF3645;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: .22s;
+}
+.delet_but img {
+  position: absolute;
+  width: 21px;
+  margin: -1px 0 0 5px;
+}
+
+.delet_but:hover {
+  opacity: .8;
 }
