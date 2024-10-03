@@ -14,7 +14,7 @@ const MainScreen = () => {
             <div>
             {announcements.map((announcement) => (
                     <div className='annCard' key={announcement.id}>
-                        <h2>@{announcement.title} - {announcement.description} |  {announcement.category}</h2>
+                        <h2>@{announcement.title} - {announcement.description} |  {announcement.category} - {announcement.subcategory}</h2>
 
                         <p className='CardId' > id: {announcement.id}</p>
                     </div>
