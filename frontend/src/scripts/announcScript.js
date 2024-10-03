@@ -6,6 +6,7 @@ export const AnnouncScript = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState(''); // Состояние для категории
+    const [subCategory, setSubCategory] = useState(''); // Состояние для подкатегории
     const [deleteId, setDeleteId] = useState('');
 
     // Определяем базовый URL в зависимости от среды
@@ -22,11 +23,16 @@ export const AnnouncScript = () => {
     };
 
     const createAnnouncement = async () => {
-        await axios.post(`${API_URL}/announcements`, { title, description, category }); // Отправляем категорию
-        fetchAnnouncements();
-        setTitle('');
-        setDescription('');
-        setCategory(''); // Сбрасываем категорию
+        try {
+            await axios.post(`${API_URL}/announcements`, { title, description, category, subCategory }); // Отправляем категорию и подкатегорию
+            fetchAnnouncements();
+            setTitle('');
+            setDescription('');
+            setCategory('');
+            setSubCategory(''); // Сбрасываем подкатегорию
+        } catch (error) {
+            console.error('Ошибка при создании объявления:', error);
+        }
     };
 
     const deleteAnnouncement = async () => {
@@ -39,5 +45,14 @@ export const AnnouncScript = () => {
         setDeleteId('');
     };
 
-    return { announcements, createAnnouncement, deleteAnnouncement, setTitle, setDescription, setCategory, setDeleteId };
+    return { 
+        announcements, 
+        createAnnouncement, 
+        deleteAnnouncement, 
+        setTitle, 
+        setDescription, 
+        setCategory, 
+        setSubCategory, // Добавляем setSubCategory
+        setDeleteId 
+    };
 };

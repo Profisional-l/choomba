@@ -1,75 +1,82 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AnnouncScript } from '../scripts/announcScript.js';
 import styles from './CreateField.module.css';
 import useUserData from '../scripts/takeTGinfo.js';
 
 const CreateField = () => {
-    const { announcements, createAnnouncement, setTitle, setDescription, setCategory } = AnnouncScript();
+    const { announcements, createAnnouncement, setTitle, setDescription, setCategory, setSubCategory } = AnnouncScript();
     const userData = useUserData();
-    const [selectedCategory, setSelectedCategoryState] = useState('');  // Локальный стейт для выбранной категории
-    const [isModalOpen, setIsModalOpen] = useState(false);  // Стейт для открытия/закрытия модального окна
-  
-    const categories = [
-      { value: 'sport', label: 'Спорт' },
-      { value: 'computerGames', label: 'Компьютерные игры' },
-      { value: 'entertainment', label: 'Развлечения' }
-    ];
+    const [selectedCategory, setSelectedCategory] = useState(''); // Состояние для выбранной категории
+    const [selectedSubCategory, setSelectedSubCategory] = useState(''); // Состояние для выбранной подкатегории
 
-    // Функция для изменения выбранной категории
-    const handleCategoryChange = (category) => {
-      setSelectedCategoryState(category);  // Установка локальной категории
-      setCategory(category);  // Сохранение выбранной категории в скрипт
-      setIsModalOpen(false);  // Закрытие модального окна после выбора
+    // Определение категорий и подкатегорий
+    const categories = {
+        activities: [
+            { value: 'sport', label: 'Спорт' },
+            { value: 'computerGames', label: 'Компьютерные игры' },
+            { value: 'entertainment', label: 'Развлечения' },
+        ],
+        sport: ['Футбол', 'Баскетбол', 'Волейбол'],
+        computerGames: ['CS2', 'Dota', 'PUBG', 'Fortnite'],
+        entertainment: [],
     };
 
-    const handleCreateAnnouncement = async () => {
-        await createAnnouncement(); // Создаем объявление
+    const handleCategoryChange = (event) => {
+        const categoryValue = event.target.value;
+        setSelectedCategory(categoryValue);
+        setCategory(categoryValue); // Устанавливаем категорию в AnnouncScript
+        setSelectedSubCategory(''); // Сбросить подкатегорию при изменении категории
+        setSubCategory(''); // Сбросить подкатегорию в AnnouncScript
+    };
+
+    const handleSubCategoryChange = (event) => {
+        const subCategoryValue = event.target.value;
+        setSelectedSubCategory(subCategoryValue);
+        setSubCategory(subCategoryValue); // Устанавливаем подкатегорию в AnnouncScript
+    };
+
+    const handleCreateAnnouncement = () => {
+        const titleValue = userData.username.toString(); // Используем имя пользователя как заголовок
+        setTitle(titleValue); // Устанавливаем заголовок в AnnouncScript
+        createAnnouncement(); // Создаем объявление
     };
 
     return (
         <div className={styles.CreatField}>
             <h2>Создать объявление</h2>
-
-            {/* Кнопка выбора категории и модальное окно */}
-            <div className={styles.Selector_Cont}>
-                <button className={styles.select_button} onClick={() => setIsModalOpen(true)}>
-                    {selectedCategory ? `Категория: ${selectedCategory}` : 'Выберите категорию'}
-                </button>
-                {isModalOpen && (
-                    <div className={styles.modal}>
-                        <div className={styles.modal_content}>
-                            <ul>
-                                <h3>Выберите категорию:</h3> <br />
-                                {categories.map((category) => (
-                                    <li key={category.value} onClick={() => handleCategoryChange(category.label)}>
-                                        {category.label}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        {/* Область вне модального окна для закрытия */}
-                        <div className={styles.modal_overlay} onClick={() => setIsModalOpen(false)} />
-                    </div>
-                )}
-            </div>
-
-            {/* Поле для ввода описания */}
+            <p>
+                <select value={selectedCategory} onChange={handleCategoryChange}>
+                    <option disabled value="">Выберите категорию</option>
+                    {categories.activities.map((activity) => (
+                        <option key={activity.value} value={activity.value}>
+                            {activity.label}
+                        </option>
+                    ))}
+                </select>
+            </p>
+            {selectedCategory && (
+                <p>
+                    <select value={selectedSubCategory} onChange={handleSubCategoryChange}>
+                        <option disabled value="">Выберите подкатегорию</option>
+                        {categories[selectedCategory].map((subcategory) => (
+                            <option key={subcategory} value={subcategory}>
+                                {subcategory}
+                            </option>
+                        ))}
+                    </select>
+                </p>
+            )}
             <textarea
                 className={styles.description_input}
                 placeholder="Описание"
                 value={announcements.description}
-                onChange={(e) => {
-                    setDescription(e.target.value);  // Установка описания
-                    setTitle(userData.username.toString());  // Установка имени пользователя как заголовка
-                }}
+                onChange={(e) => setDescription(e.target.value)}
             />
-
-            {/* Кнопка для создания объявления */}
-            <button className={styles.createBut} onClick={handleCreateAnnouncement}>
-                Создать объявление
-            </button>
+            <button className={styles.createBut} onClick={handleCreateAnnouncement}>Создать объявление</button>
         </div>
     );
 };
 
 export default CreateField;
+
+

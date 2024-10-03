@@ -18,7 +18,8 @@ def init_db():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         description TEXT NOT NULL,
-        category TEXT NOT NULL  -- Добавляем новый столбец для категории
+        category TEXT NOT NULL,
+        sub_category TEXT NOT NULL  -- Добавляем новый столбец для подкатегории
     )
     ''')
     connection.commit()
@@ -42,11 +43,15 @@ def handle_announcements():
             title = data.get('title')
             description = data.get('description')
             category = data.get('category')  # Получаем категорию из запроса
-            if not title or not description or not category:
-                return jsonify({"status": "error", "message": "Title, description, and category are required"}), 400
+            sub_category = data.get('subCategory')  # Получаем подкатегорию из запроса
+            
+            if not title or not description or not category or not sub_category:
+                return jsonify({"status": "error", "message": "Title, description, category, and subCategory are required"}), 400
+            
             connection = get_db_connection()
             cursor = connection.cursor()
-            cursor.execute('INSERT INTO Announcements (title, description, category) VALUES (?, ?, ?)', (title, description, category))
+            cursor.execute('INSERT INTO Announcements (title, description, category, sub_category) VALUES (?, ?, ?, ?)', 
+                           (title, description, category, sub_category))
             connection.commit()
             connection.close()
             return jsonify({'message': 'Announcement created!'}), 201
@@ -56,7 +61,13 @@ def handle_announcements():
             cursor.execute('SELECT * FROM Announcements')
             announcements = cursor.fetchall()
             connection.close()
-            return jsonify([{'id': a['id'], 'title': a['title'], 'description': a['description'], 'category': a['category']} for a in announcements])
+            return jsonify([{
+                'id': a['id'], 
+                'title': a['title'], 
+                'description': a['description'], 
+                'category': a['category'], 
+                'sub_category': a['sub_category']  # Возвращаем подкатегорию
+            } for a in announcements])
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
 
@@ -68,7 +79,13 @@ def get_user_announcements(username):
         cursor.execute('SELECT * FROM Announcements WHERE title = ?', (username,))
         announcements = cursor.fetchall()
         connection.close()
-        return jsonify([{'id': a['id'], 'title': a['title'], 'description': a['description'], 'category': a['category']} for a in announcements])
+        return jsonify([{
+            'id': a['id'], 
+            'title': a['title'], 
+            'description': a['description'], 
+            'category': a['category'], 
+            'sub_category': a['sub_category']  # Возвращаем подкатегорию
+        } for a in announcements])
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
 
