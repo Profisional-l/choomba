@@ -28,6 +28,17 @@ const AnnPage = () => {
           Связаться с {announcement.title}
         </button>
       </a>
+
+
+      {/* {(announcement.category == "computerGames")? (
+              <a href="https://discord.gg/naJFECBK3F">
+              <button className="linkToUserBut">
+                Наш Discord сервер
+              </button>
+            </a>
+            ) : (
+              <div></div>
+            )} */}
     </div>
   );
 };

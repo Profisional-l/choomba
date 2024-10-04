@@ -18,8 +18,8 @@ def init_db():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         description TEXT NOT NULL,
-        category TEXT NOT NULL,  -- Добавляем новый столбец для категории
-        subcategory TEXT  -- Добавляем новый столбец для подкатегории
+        category TEXT NOT NULL,
+        subcategory TEXT
     )
     ''')
     connection.commit()
@@ -42,8 +42,8 @@ def handle_announcements():
             data = request.json
             title = data.get('title')
             description = data.get('description')
-            category = data.get('category')  # Получаем категорию из запроса
-            subcategory = data.get('subCategory')  # Получаем подкатегорию из запроса
+            category = data.get('category')
+            subcategory = data.get('subcategory')  # Исправлено на subcategory
             
             if not title or not description or not category:
                 return jsonify({"status": "error", "message": "Title, description, and category are required"}), 400
@@ -66,12 +66,12 @@ def handle_announcements():
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
 
-@app.route('/announcements/user/<string:username>', methods=['GET'])
-def get_user_announcements(username):
+@app.route('/announcements/subcategory/<string:subcategory>', methods=['GET'])
+def get_announcements_by_subcategory(subcategory):
     try:
         connection = get_db_connection()
         cursor = connection.cursor()
-        cursor.execute('SELECT * FROM Announcements WHERE title = ?', (username,))
+        cursor.execute('SELECT * FROM Announcements WHERE subcategory = ?', (subcategory,))
         announcements = cursor.fetchall()
         connection.close()
         return jsonify([{'id': a['id'], 'title': a['title'], 'description': a['description'], 
