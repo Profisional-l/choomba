@@ -8,7 +8,7 @@ const MainScreen = () => {
 
     return (
         <>
-            <HelloMain />
+            <HelloMain/>
 
             <div style={{ marginTop: "40px", marginBottom: "40px" }}>
                 <div>
