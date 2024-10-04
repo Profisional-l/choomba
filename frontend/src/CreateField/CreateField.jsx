@@ -19,9 +19,9 @@ const CreateField = () => {
             { value: 'computerGames', label: 'Компьютерные игры' },
             { value: 'entertainment', label: 'Развлечения' }
         ],
-        sport: ['Футбол', 'Баскетбол', 'Волейбол'],
-        computerGames: ['CS2', 'Dota', 'PUBG', 'Fortnite'],
-        entertainment: []
+        sport: ['Футбол', 'Баскетбол', 'Волейбол', 'Теннис', 'Хоккей'],
+        computerGames: ['CS2', 'Dota 2', 'PUBG', 'Fortnite', 'Warzone', 'Apex Legends'],
+        entertainment: ['Кино', 'Квизы', 'Настольные игры', 'Концерты', 'Квесты', 'Просто прогулка', 'Другое']
     };
 
     // Функция для изменения выбранной категории
@@ -34,7 +34,11 @@ const CreateField = () => {
             setSubCategories(categories.sport);
         } else if (category === 'Компьютерные игры') {
             setSubCategories(categories.computerGames);
-        } else {
+        } 
+        else if (category === 'Развлечения') {
+            setSubCategories(categories.entertainment);
+        }
+        else {
             setSubCategories([]);
         }
 
