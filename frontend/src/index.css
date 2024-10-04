@@ -179,3 +179,31 @@ input:hover {
 .delet_but:hover {
   opacity: .8;
 }
+
+.linkToUserBut {
+  min-width: 50px;
+  min-height: 40px;
+  padding: 12px;
+  border: solid 1px #646cff6d;
+  border-radius: 15px;
+  font-size: 14px;
+  background-color: #26262685;
+  color: #ffffff;
+  cursor: pointer;
+  transition: .33s;
+}
+
+.linkToUserBut:hover {
+  border: solid 1px #646cffd6;
+  background-color: #42424285;
+}
+.AnnDescriptionField, .AnnCategoryField, .AnnSubCategoryField {
+  padding: 13px;
+  background-color: #16161685;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  border: solid 1px #ffffff2f;
+  text-align: left;
+  font-size: 15px;
+  transition: all .3s;
+}

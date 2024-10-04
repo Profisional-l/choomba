@@ -16,15 +16,15 @@ const ProfilePage = () => {
   useEffect(() => {
     if (userData) {
       fetch(`${API_URL}/announcements/user/${userData.username}`)
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
           if (Array.isArray(data)) {
             setUserAnnouncements(data);
           } else {
-            console.error('Error fetching announcements:', data);
+            console.error("Error fetching announcements:", data);
           }
         })
-        .catch(error => console.error('Error:', error));
+        .catch((error) => console.error("Error:", error));
     }
   }, [userData]);
 
@@ -58,6 +58,22 @@ const ProfilePage = () => {
         {userData ? (
           <div>
             <h2>{userData.username}, ку! 👋</h2>
+            {(userData.id == 1181442479) ||
+            (userData.id == 548461454) ? (
+              <div style={{ marginTop: "40px" }}>
+                <hr />
+                <h3>Удалить объявление по ID:</h3>
+                <input
+                  type="text"
+                  value={deleteId}
+                  onChange={(e) => setDeleteId(e.target.value)}
+                  placeholder="ID объявления"
+                />
+                <button onClick={handleDeleteById}>Удалить по ID</button>
+              </div>
+            ) : (
+              <div></div>
+            )}
           </div>
         ) : (
           <p>Loading . . .</p>
@@ -100,19 +116,8 @@ const ProfilePage = () => {
           )}
         </div>
 
-        <div style={{ marginTop: "40px" }}>
-          <h2>Удалить объявление по ID:</h2>
-          <input
-            type="text"
-            value={deleteId}
-            onChange={(e) => setDeleteId(e.target.value)}
-            placeholder="Введите ID объявления"
-          />
-          <button onClick={handleDeleteById}>Удалить по ID</button>
-        </div>
       </div>
       <br />
-      <hr />
       <br />
     </div>
   );

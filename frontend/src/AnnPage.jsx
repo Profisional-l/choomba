@@ -1,24 +1,35 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import React from "react";
+import { useLocation } from "react-router-dom";
 
 const AnnPage = () => {
-    const location = useLocation();
-    const { announcement } = location.state || {}; // Получаем переданное объявление
+  const location = useLocation();
+  const { announcement } = location.state || {}; // Получаем переданное объявление
 
-    if (!announcement) {
-        return <div>Объявление не найдено.</div>;
-    }
+  if (!announcement) {
+    return <div>Объявление не найдено.</div>;
+  }
 
-    return (
+  return (
+    <div>
+      <h2>Объявление от @{announcement.title}</h2>
+      <p className="AnnCategoryField">{announcement.category}</p>
+      {announcement.subcategory ? (
         <div>
-            <h2>{announcement.title}</h2>
-            <p>{announcement.description}</p>
-            <p>Категория: {announcement.category}</p>
-            <p>Подкатегория: {announcement.subcategory}</p>
-            <p>ID: {announcement.id}</p>
+          <p className="AnnSubCategoryField">Подкатегория: {announcement.subcategory}</p>{" "}
         </div>
-    );
+      ) : (
+        <div></div>
+      )}
+        <p className="AnnDescriptionField">Описание:<br />{announcement.description}</p>
+
+      {/* <p>ID: {announcement.id}</p> */}
+      <a href={`https://t.me/${announcement.title}`}>
+        <button className="linkToUserBut">
+          Связаться с {announcement.title}
+        </button>
+      </a>
+    </div>
+  );
 };
 
 export default AnnPage;
-
