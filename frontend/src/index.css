@@ -115,6 +115,7 @@ input:hover {
 } */
 
 .annCard {
+  opacity: 0;
   padding: 10px;
   background-color: #16161685;
   margin-bottom: 20px;
@@ -123,6 +124,16 @@ input:hover {
   text-align: left;
   font-size: 12px;
   transition: all .3s;
+  animation: AnnFadeIn .22s ease-in-out forwards;
+}
+
+@keyframes AnnFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .link{
