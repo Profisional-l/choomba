@@ -1,5 +1,5 @@
-import React from 'react';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+import React from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const Head = () => {
   return (
@@ -8,8 +8,12 @@ const Head = () => {
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Choomba</title>
-        {/* <script src="https://telegram.org/js/telegram-web-app.js" defer/> */}
-        <script>miniApp.setHeaderColor('#000000');</script>
+        <script src="https://telegram.org/js/telegram-web-app.js" defer></script>
+        <script>
+          Telegram.WebApp.expand();
+          miniApp.setHeaderColor('#000000');
+        </script>
+        
       </Helmet>
     </HelmetProvider>
   );
