@@ -6,7 +6,8 @@ const Head = () => {
     if (window.Telegram && window.Telegram.WebApp) {
       window.Telegram.WebApp.expand(); // Расширяем приложение
       window.Telegram.WebApp.setHeaderColor('#000000'); // Меняем цвет заголовка
-      window.Telegram.WebApp.setBgColor('#000000'); // Меняем цвет фона
+      // Уберите следующий вызов, если он вызывает ошибку
+      // window.Telegram.WebApp.setBgColor('#888311'); // Этот метод не поддерживается
     }
   }, []);
 
