@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AnnouncScript } from "./scripts/announcScript.js";
 import HelloMain from "./HelloMain/HelloMain.jsx";
@@ -19,10 +19,6 @@ const MainScreen = () => {
     const [miniApp] = initMiniApp();
     const isTelegram = !!miniApp;
 
-    if (isTelegram) {
-        miniApp.setHeaderColor('#000000');
-    }
-
     const location = useLocation();
     const { category, subcategory, fromFindPage } = location.state || {};
     const { announcements } = AnnouncScript();
@@ -32,6 +28,13 @@ const MainScreen = () => {
             (announcement) => announcement.subcategory === subcategory
         )
         : announcements;
+
+    useEffect(() => {
+        // Установка цвета заголовка, если мы в окружении Telegram
+        if (isTelegram) {
+            miniApp.setHeaderColor('#000000');
+        }
+    }, [isTelegram, miniApp]); // Зависимости для useEffect
 
     return (
         <>
