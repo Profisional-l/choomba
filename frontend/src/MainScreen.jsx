@@ -3,21 +3,19 @@ import { Link, useLocation } from "react-router-dom";
 import { AnnouncScript } from "./scripts/announcScript.js";
 import HelloMain from "./HelloMain/HelloMain.jsx";
 import { initMiniApp } from '@telegram-apps/sdk-react';
+import WebApp from "@twa-dev/sdk"; 
+
 import useUserData from "./scripts/takeTGinfo.js";
 
 const MainScreen = () => {
     const userData = useUserData();
 
     React.useEffect(() => {
-        if (userData) {
-            if (window.Telegram && window.Telegram.WebApp) {
+        if (WebApp.initDataUnsafe.user) {
                 // Код для Telegram
                 window.Telegram.WebApp.expand();
                 const [miniApp] = initMiniApp();
                 miniApp.setHeaderColor('#000000');
-            } else {
-                console.log("App is running in the browser."); // Отладочная информация для браузера
-            }
         }
     }, [userData]);
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import { initMiniApp } from '@telegram-apps/sdk-react';
 
 const Head = () => {
   return (
@@ -10,6 +11,9 @@ const Head = () => {
         <title>Choomba</title>
         <script src="https://telegram.org/js/telegram-web-app.js" defer></script>
         <script>Telegram.WebApp.expand();</script>
+        {() => {                
+          const [miniApp] = initMiniApp();
+          miniApp.setHeaderColor('#000000');}}
       </Helmet>
     </HelmetProvider>
   );
