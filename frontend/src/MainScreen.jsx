@@ -2,12 +2,25 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AnnouncScript } from "./scripts/announcScript.js";
 import HelloMain from "./HelloMain/HelloMain.jsx";
-import { initMiniApp } from '@telegram-apps/sdk-react';
+import { initMiniApp } from '@twa-dev/sdk';
+import useUserData from "./scripts/takeTGinfo.js";
+
 
 const MainScreen = () => {
-    const [miniApp] = initMiniApp();
-    miniApp.setHeaderColor('#0000004f');
 
+
+    const userData = useUserData();
+    React.useEffect(() => {
+        if (userData) {
+            // Код для Telegram
+            window.Telegram.WebApp.expand();
+            const [miniApp] = initMiniApp();
+            miniApp.setHeaderColor('#000000');
+        } 
+      }, []);
+    
+
+    
   const location = useLocation();
   const { category, subcategory, fromFindPage } = location.state || {}; // Получаем состояние
   const { announcements } = AnnouncScript(); // Получаем данные из AnnouncScript

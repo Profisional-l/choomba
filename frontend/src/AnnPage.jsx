@@ -25,7 +25,7 @@ const AnnPage = () => {
       {/* <p>ID: {announcement.id}</p> */}
       <a href={`https://t.me/${announcement.title}`}>
         <button className="linkToUserBut">
-          Связаться с {announcement.title}
+          Связаться с {announcement.title} ✍️
         </button>
       </a>
 
