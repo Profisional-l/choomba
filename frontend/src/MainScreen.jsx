@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AnnouncScript } from "./scripts/announcScript.js";
 import HelloMain from "./HelloMain/HelloMain.jsx";
-import { initMiniApp } from '@twa-dev/sdk';
+import { initMiniApp } from '@telegram-apps/sdk-react';
 import useUserData from "./scripts/takeTGinfo.js";
 
 
