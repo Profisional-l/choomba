@@ -6,8 +6,8 @@ import { initMiniApp } from '@telegram-apps/sdk-react';
 
 const MainScreen = () => {
     const [miniApp] = initMiniApp();
-    miniApp.setHeaderColor('#000000');
-    
+    miniApp.setHeaderColor('#0000004f');
+
   const location = useLocation();
   const { category, subcategory, fromFindPage } = location.state || {}; // Получаем состояние
   const { announcements } = AnnouncScript(); // Получаем данные из AnnouncScript
