@@ -117,6 +117,7 @@ const CreateField = () => {
             <textarea
                 className={styles.description_input}
                 placeholder="Описание"
+                maxLength={150}
                 value={announcements.description}
                 onChange={(e) => {
                     setDescription(e.target.value);  // Установка описания

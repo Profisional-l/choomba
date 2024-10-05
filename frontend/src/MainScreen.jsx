@@ -62,10 +62,11 @@ const MainScreen = () => {
                             key={announcement.id}
                         >
                             <div className="annCard">
-                                <h2>
-                                    @{announcement.title} - {announcement.description} |{" "}
-                                    {announcement.category} - {announcement.subcategory}
-                                </h2>
+                                <div>
+                                    <h2>@{announcement.title} ищет людей для: {announcement.category} - {announcement.subcategory}</h2>
+                                    <hr style={{opacity: .3, maxWidth: "85%"}}/>
+                                    <p>Описание: {announcement.description}</p>                                    
+                                </div>
                                 <p className="CardId">id: {announcement.id}</p>
                             </div>
                         </Link>
