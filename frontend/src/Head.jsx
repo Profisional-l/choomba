@@ -5,7 +5,10 @@ const Head = () => {
   React.useEffect(() => {
     if (window.Telegram && window.Telegram.WebApp) {
       window.Telegram.WebApp.expand();
-      window.Telegram.WebApp.setHeaderColor('#fcb69f');
+      window.Telegram.WebApp.setHeaderColor('#000000');
+      miniApp.setBgColor('#888311');
+      miniApp.setHeaderColor('#000000');
+
     }
   }, []);
 
