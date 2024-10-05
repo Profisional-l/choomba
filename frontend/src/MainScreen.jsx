@@ -63,11 +63,8 @@ if (import.meta.env.DEV) {
 }
 
 const MainScreen = () => {
-    React.useEffect(() => {
-            window.Telegram.WebApp.expand(); // Расширяем приложение
-            const [miniApp] = initMiniApp();
-            miniApp.setHeaderColor('#000000');
-    }, []);
+    const [miniApp] = initMiniApp();
+    miniApp.setHeaderColor('#000000');
 
     const location = useLocation();
     const { category, subcategory, fromFindPage } = location.state || {}; // Получаем состояние
