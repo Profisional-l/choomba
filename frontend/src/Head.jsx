@@ -9,6 +9,7 @@ const Head = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Choomba</title>
         {/* <script src="https://telegram.org/js/telegram-web-app.js" defer/> */}
+        <script>miniApp.setHeaderColor('#000000');</script>
       </Helmet>
     </HelmetProvider>
   );
