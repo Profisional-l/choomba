@@ -12,10 +12,16 @@ a:hover {
 
 ::-webkit-scrollbar { width: 0; }
 
+
 body {
   margin: 0;
   background-color: #000000;
   color: rgb(255, 255, 255);
+
+  overflow-y: scroll; /* Включаем прокрутку */
+  -ms-overflow-style: none; /* Для Edge и IE */
+  scrollbar-width: none; /* Для Firefox */
+  
 }
 .BgBluredIMG {
   position: fixed;
