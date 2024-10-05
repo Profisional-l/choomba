@@ -2,6 +2,13 @@ import React from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const Head = () => {
+  React.useEffect(() => {
+    if (window.Telegram && window.Telegram.WebApp) {
+      window.Telegram.WebApp.expand();
+      window.Telegram.WebApp.setHeaderColor('#fcb69f');
+    }
+  }, []);
+
   return (
     <HelmetProvider>
       <Helmet>
@@ -9,11 +16,6 @@ const Head = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Choomba</title>
         <script src="https://telegram.org/js/telegram-web-app.js" defer></script>
-        <script>
-          Telegram.WebApp.expand();
-          miniApp.setHeaderColor('#000000');
-        </script>
-        
       </Helmet>
     </HelmetProvider>
   );
