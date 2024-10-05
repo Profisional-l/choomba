@@ -4,11 +4,9 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 const Head = () => {
   React.useEffect(() => {
     if (window.Telegram && window.Telegram.WebApp) {
-      window.Telegram.WebApp.expand();
-      window.Telegram.WebApp.setHeaderColor('#000000');
-      miniApp.setBgColor('#888311');
-      miniApp.setHeaderColor('#000000');
-
+      window.Telegram.WebApp.expand(); // Расширяем приложение
+      window.Telegram.WebApp.setHeaderColor('#000000'); // Меняем цвет заголовка
+      window.Telegram.WebApp.setBgColor('#000000'); // Меняем цвет фона
     }
   }, []);
 
