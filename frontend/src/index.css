@@ -9,8 +9,8 @@
 a:hover {
   color: #535bf2;
 }
-::-webkit-scrollbar { width: 0; }
 
+::-webkit-scrollbar { width: 0; }
 
 body {
   margin: 0;
@@ -22,7 +22,7 @@ body {
   width: 100%;
 }
 body {
-  background-image: url("./assets/mainbg01.png");
+  background-image: url("./assets/bg.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
@@ -70,7 +70,7 @@ input:hover {
   bottom: 0px;
   left: 0px;
   width: 100%;
-  background-color: #000000b7;
+  background-color: #00000075;
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
 }
@@ -124,7 +124,7 @@ input:hover {
   text-align: left;
   font-size: 12px;
   transition: all .3s;
-  animation: AnnFadeIn .22s ease-in-out forwards;
+  animation: AnnFadeIn .23s ease-in-out forwards;
 }
 
 @keyframes AnnFadeIn {
@@ -217,4 +217,130 @@ input:hover {
   text-align: left;
   font-size: 15px;
   transition: all .3s;
+}
+
+.container {
+  position: relative;
+}
+
+.page {
+  opacity: 0;
+
+  position: absolute;
+  left: 15px;
+  right: 15px;
+}
+
+.page-enter {
+  opacity: 0;
+  transform: scale(1.1);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.page-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.page-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.SearchBut, .BackToCatBut {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 22px;
+  background-color: #0000009f;
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  padding: 10px 20px 10px 20px;
+  min-width: 120px;
+  color: #ffffff;
+  border: solid 1px #ffffff3a;
+  border-radius: 50px;
+  cursor: pointer;
+
+  opacity: 0;
+  animation: SearchFadeIn .22s ease-in-out forwards;
+}
+
+@keyframes SearchFadeIn {
+  0% {
+    bottom: 50px;
+    opacity: 0;
+  }
+  100% {
+    bottom: 80px;
+    opacity: 1;
+  }
+}
+
+.SearchBut img {
+  width: 20px;
+  margin-left: 10px;
+}
+
+.FindCatBut {
+  font-size: 22px;
+  text-align: left;
+  width: 100%;
+  padding: 7px;
+  /* margin-bottom: 10px; */
+  background-color: transparent;
+  color: #ffffff;
+  border: none;
+  transition: color .22s;
+  cursor: pointer;
+  
+}
+
+.FindCatBut:hover {
+  color: #afafaf;
+}
+
+.button-container {
+  padding: 10px 0 10px 0; 
+  animation: AnnFadeIn .33s ease-in-out forwards;
+
+}
+
+.border-bottom {
+  border-bottom: 1px solid #cccccca2;
+}
+.BackButOut {
+  display: none;
+}
+.NoFilterBut {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+  margin: auto;
+  background-color: #0000009f;
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  padding: 10px 20px 10px 20px;
+  min-width: 120px;
+  color: #ffffff;
+  border: solid 1px #ffffff3a;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.BackToCatBut.navigated {
+  display: none;
 }
