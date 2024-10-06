@@ -10,7 +10,7 @@ function App() {
 
   return (
     <>
-      <div class="background"></div>
+      <div  className="background"></div>
       <Navbar />
     </>
   );

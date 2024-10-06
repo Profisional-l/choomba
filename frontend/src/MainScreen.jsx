@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { AnnouncScript } from "./scripts/announcScript.js";
 import HelloMain from "./HelloMain/HelloMain.jsx";
 import { initMiniApp as actualInitMiniApp } from '@telegram-apps/sdk-react';
+import { initSwipeBehavior } from '@telegram-apps/sdk'; // Import swipe behavior
 
 const initMiniApp = () => {
     if (window.location.href.includes("localhost")) {
@@ -36,6 +37,10 @@ const MainScreen = () => {
         // Установка цвета заголовка, если мы в окружении Telegram
         if (isTelegram) {
             miniApp.setHeaderColor('#000000');
+
+            // Initialize swipe behavior and disable vertical swipe
+            const [swipeBehavior] = initSwipeBehavior();
+            swipeBehavior.disableVerticalSwipe(); // Disable swipe down to minimize
         }
         
         // Имитация загрузки данных
@@ -65,9 +70,9 @@ const MainScreen = () => {
             {/* Показываем спиннер/индикатор загрузки, пока идет загрузка */}
             {isLoading ? (
                 <div style={{ textAlign: "center", marginTop: "50px" }}>
-                        <div className="spinner-container">
-                              <div className="spinner"></div>
-                        </div>
+                    <div className="spinner-container">
+                        <div className="spinner"></div>
+                    </div>
                 </div>
             ) : (
                 <div style={{ marginTop: "40px", marginBottom: "40px" }}>
@@ -82,8 +87,8 @@ const MainScreen = () => {
                                 <div className="annCard">
                                     <div>
                                         <h2>@{announcement.title} ищет людей для: {announcement.subcategory} - {announcement.category}</h2>
-                                        <hr style={{opacity: .3, maxWidth: "85%"}}/>
-                                        <p>Описание: {announcement.description}</p>                                    
+                                        <hr style={{ opacity: .3, maxWidth: "85%" }} />
+                                        <p>Описание: {announcement.description}</p>
                                     </div>
                                     <p className="CardId">id: {announcement.id}</p>
                                 </div>
