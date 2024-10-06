@@ -58,6 +58,34 @@ button:focus-visible {
 } */
 
 
+
+
+
+
+/* Spinner.css */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.spinner {
+  border: 3px solid rgba(0, 0, 0, 0); /* Серый цвет фона */
+  border-top: 3px solid #ffffffb7; /* Синий цвет вращающейся линии */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin .55s linear infinite; /* Анимация вращения */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
 input {
   border-radius: 8px;
   border: #646cff31 solid 1px;

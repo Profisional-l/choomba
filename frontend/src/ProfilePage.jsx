@@ -9,12 +9,14 @@ const ProfilePage = () => {
   const [userAnnouncements, setUserAnnouncements] = useState([]);
   const [deleteId, setDeleteId] = useState("");
   const [selectedId, setSelectedId] = useState(null); // Состояние для хранения выбранного ID
+  const [isLoading, setIsLoading] = useState(true); // Состояние для загрузки
 
   const isLocal = window.location.hostname === "localhost";
   const API_URL = isLocal ? "http://localhost:5000" : "/api";
 
   useEffect(() => {
     if (userData) {
+      setIsLoading(true); // Включаем состояние загрузки
       fetch(`${API_URL}/announcements/user/${userData.username}`)
         .then((response) => response.json())
         .then((data) => {
@@ -23,8 +25,12 @@ const ProfilePage = () => {
           } else {
             console.error("Error fetching announcements:", data);
           }
+          setIsLoading(false); // Отключаем состояние загрузки после получения данных
         })
-        .catch((error) => console.error("Error:", error));
+        .catch((error) => {
+          console.error("Error:", error);
+          setIsLoading(false); // Отключаем состояние загрузки в случае ошибки
+        });
     }
   }, [userData]);
 
@@ -58,8 +64,7 @@ const ProfilePage = () => {
         {userData ? (
           <div>
             <h2>{userData.username}, ку! 👋</h2>
-            {(userData.id == 1181442479) ||
-            (userData.id == 548461454) ? (
+            {(userData.id == 1181442479) || (userData.id == 548461454) ? (
               <div style={{ marginTop: "40px" }}>
                 <hr />
                 <h3>Удалить объявление по ID:</h3>
@@ -76,12 +81,21 @@ const ProfilePage = () => {
             )}
           </div>
         ) : (
-          <p>Loading . . .</p>
+          <p>Запущено вне Telegram</p>
         )}
+
         <div style={{ marginTop: "40px", marginBottom: "40px" }}>
           <h2>Твои объявления:</h2>
           <br />
-          {userAnnouncements.length > 0 ? (
+
+          {/* Спиннер, пока идет загрузка */}
+          {isLoading ? (
+                        <div style={{ textAlign: "center", marginTop: "50px" }}>
+                           <div className="spinner-container">
+                                 <div className="spinner"></div>
+                           </div>
+                   </div>
+          ) : userAnnouncements.length > 0 ? (
             <div>
               {userAnnouncements.map((announcement) => (
                 <div
@@ -115,7 +129,6 @@ const ProfilePage = () => {
             <p>Нет объявлений.</p>
           )}
         </div>
-
       </div>
       <br />
       <br />
