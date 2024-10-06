@@ -67,25 +67,29 @@ const CreateField = () => {
         setSubCategoryError(false);
         setIsLoading(true); // Устанавливаем состояние загрузки в true
         setIsErrorOccurred(false); // Сбрасываем состояние ошибки
-
+    
+        // Устанавливаем заголовок перед проверкой существующих объявлений
+        const title = userData.username.toString();  // Заголовок объявления
+        setTitle(title);
+    
         try {
             const response = await fetch(`${API_URL}/announcements`);
-
+    
             if (!response.ok) {
                 throw new Error('Ошибка при получении объявлений');
             }
-
+    
             const existingAnnouncements = await response.json();
-            const title = setTitle(userData.username.toString());  // Заголовок объявления
-            setTitle(title);
+            
+            // Здесь используем установленный заголовок для фильтрации
             const count = existingAnnouncements.filter(announcement => announcement.title === title).length;
-
+    
             if (count >= 2) {
                 setIsErrorOccurred(true); // Устанавливаем состояние ошибки
                 setIsLoading(false); // Сбрасываем состояние загрузки
                 return;
             }
-
+    
             await createAnnouncement(); // Создание объявления
             setIsAnnouncementCreated(true); // Устанавливаем состояние успешного создания
         } catch (error) {
@@ -95,6 +99,7 @@ const CreateField = () => {
             setIsLoading(false); // Сбрасываем состояние загрузки
         }
     };
+    
 
     return (
         <div className={styles.CreatField}>
