@@ -15,7 +15,7 @@ const AnnPage = () => {
       <p className="AnnCategoryField">{announcement.category}</p>
       {announcement.subcategory ? (
         <div>
-          <p className="AnnSubCategoryField">Подкатегория: {announcement.subcategory}</p>{" "}
+          <p className="AnnSubCategoryField">{announcement.subcategory}</p>{" "}
         </div>
       ) : (
         <div></div>
@@ -28,17 +28,6 @@ const AnnPage = () => {
           Связаться с {announcement.title} ✍️
         </button>
       </a>
-
-
-      {/* {(announcement.category == "computerGames")? (
-              <a href="https://discord.gg/naJFECBK3F">
-              <button className="linkToUserBut">
-                Наш Discord сервер
-              </button>
-            </a>
-            ) : (
-              <div></div>
-            )} */}
     </div>
   );
 };

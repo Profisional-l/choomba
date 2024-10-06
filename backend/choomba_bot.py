@@ -7,8 +7,9 @@ bot = telebot.TeleBot('7726366830:AAF3kFz3bROKQQbUajqveM_D2R6pr7A3YVs')
 kb = types.InlineKeyboardMarkup(row_width=1)
 web = types.WebAppInfo("https://choomba.formuls.xyz/")
 gaz = types.InlineKeyboardButton(text="Газуем! 🚀", web_app=web)
+ds_server = types.InlineKeyboardButton(text="Наш Discord сервер 👾", url="https://discord.gg/uTMFsqHp")
 support = types.InlineKeyboardButton(text="Поддержка 👽",callback_data='support')
-kb.add(gaz, support)
+kb.add(gaz, ds_server, support)
 
 
 def forward(message):
@@ -19,7 +20,9 @@ def forward(message):
 @bot.message_handler(commands=['start'])
 def start(message):
     username = message.from_user.username
-    bot.send_message(message.chat.id, "Здравствуй, " + username, reply_markup=kb)
+    bot.send_message(message.chat.id, "Привет, " + username+"! Choomba — это уникальное приложение, которое поможет вам найти новых друзей и организовать совместные активности для новых приключений. "
+                     +"Независимо от того, ищете ли вы компанию для компьютерных игр, занятия спортом, посещения мероприятий или просто общения, "
+                     +"наше приложение сделает это легко и увлекательно.", reply_markup=kb)
 
 @bot.callback_query_handler(func=lambda call: call.data == "support")
 def but1_pressed(call: types.CallbackQuery):

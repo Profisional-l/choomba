@@ -211,6 +211,12 @@ input:hover {
   margin-right: 3px;
   text-align: end;
 }
+.CardIdContainer {
+  display: flex;
+  justify-content: space-between; /* Размещает элементы по краям */
+  align-items: center; /* Выравнивает элементы по центру по вертикали */
+  margin-top: 10px; /* Добавьте отступ сверху, если нужно */
+}
 
 .deleted {
   opacity: 0.5; /* Уменьшаем непрозрачность */

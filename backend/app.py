@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import sqlite3
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 CORS(app)
@@ -19,7 +20,8 @@ def init_db():
         title TEXT NOT NULL,
         description TEXT NOT NULL,
         category TEXT NOT NULL,  -- Добавляем новый столбец для категории
-        subcategory TEXT  -- Добавляем новый столбец для подкатегории
+        subcategory TEXT,  -- Добавляем новый столбец для подкатегории
+        created_at TEXT
     )
     ''')
     connection.commit()
@@ -35,6 +37,7 @@ def send_userid():
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
 
+
 @app.route('/announcements', methods=['GET', 'POST'])
 def handle_announcements():
     try:
@@ -42,16 +45,20 @@ def handle_announcements():
             data = request.json
             title = data.get('title')
             description = data.get('description')
-            category = data.get('category')  # Получаем категорию из запроса
-            subcategory = data.get('subCategory')  # Получаем подкатегорию из запроса
+            category = data.get('category')
+            subcategory = data.get('subCategory')
             
             if not title or not description or not category:
                 return jsonify({"status": "error", "message": "Title, description, and category are required"}), 400
             
+            # Получаем текущее время в формате GMT+3
+            current_time = datetime.utcnow() + timedelta(hours=3)
+            formatted_time = current_time.strftime('%Y-%m-%d %H:%M:%S')  # Форматируем время
+
             connection = get_db_connection()
             cursor = connection.cursor()
-            cursor.execute('INSERT INTO Announcements (title, description, category, subcategory) VALUES (?, ?, ?, ?)', 
-                           (title, description, category, subcategory))
+            cursor.execute('INSERT INTO Announcements (title, description, category, subcategory, created_at) VALUES (?, ?, ?, ?, ?)', 
+                           (title, description, category, subcategory, formatted_time))
             connection.commit()
             connection.close()
             return jsonify({'message': 'Announcement created!'}), 201
@@ -61,10 +68,15 @@ def handle_announcements():
             cursor.execute('SELECT * FROM Announcements')
             announcements = cursor.fetchall()
             connection.close()
+            print("Fetched Announcements:", announcements)  # Отладочное сообщение
             return jsonify([{'id': a['id'], 'title': a['title'], 'description': a['description'], 
-                             'category': a['category'], 'subcategory': a['subcategory']} for a in announcements])
+                             'category': a['category'], 'subcategory': a['subcategory'], 
+                             'created_at': a['created_at']} for a in announcements])
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
+
+
+
 
 @app.route('/announcements/user/<string:username>', methods=['GET'])
 def get_user_announcements(username):

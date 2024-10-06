@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { AnnouncScript } from '../scripts/announcScript.js';
 import styles from './CreateField.module.css';
 import useUserData from '../scripts/takeTGinfo.js';
-import checkmarkImage from '../assets/checked.png'; // Путь к вашей картинке с галочкой
-import LoadCheckmarkImage from '../assets/loadingchecked.png'; // Путь к вашей картинке с галочкой
+import checkmarkImage from '../assets/checked.png'; // Путь к картинке с галочкой
+import LoadCheckmarkImage from '../assets/loadingchecked.png'; // Путь к картинке загрузки
 
 const CreateField = () => {
     const { announcements, createAnnouncement, setTitle, setDescription, setCategory, setSubCategory } = AnnouncScript();
     const userData = useUserData();
-    
+    const isLocal = window.location.hostname === "localhost";
+    const API_URL = isLocal ? "http://localhost:5000/" : "/api";
+
     const [selectedCategory, setSelectedCategoryState] = useState('');
     const [subCategories, setSubCategories] = useState([]);
     const [selectedSubCategory, setSelectedSubCategory] = useState('');
@@ -62,9 +64,32 @@ const CreateField = () => {
         }
         setSubCategoryError(false);
         setIsLoading(true); // Устанавливаем состояние загрузки в true
-        await createAnnouncement(); // Создание объявления
-        setIsLoading(false); // Сбрасываем состояние загрузки
-        setIsAnnouncementCreated(true); // Устанавливаем состояние успешного создания
+        
+        try {
+            const response = await fetch(`${API_URL}/announcements`);
+
+            if (!response.ok) {
+                throw new Error('Ошибка при получении объявлений');
+            }
+            const existingAnnouncements = await response.json();
+            const title = userData.username.toString(); // Заголовок объявления
+            setTitle(title);
+            const count = existingAnnouncements.filter(announcement => announcement.title === title).length;
+
+            if (count >= 2) {
+                alert("Нельзя создавать более 2 объявлений одному человеку");
+                setIsLoading(false); // Сбрасываем состояние загрузки
+                return;
+            }
+
+            await createAnnouncement(); // Создание объявления
+            setIsAnnouncementCreated(true); // Устанавливаем состояние успешного создания
+        } catch (error) {
+            console.error('Ошибка:', error);
+            alert('Произошла ошибка при создании объявления. Пожалуйста, попробуйте еще раз.');
+        } finally {
+            setIsLoading(false); // Сбрасываем состояние загрузки
+        }
     };
 
     return (
@@ -136,9 +161,11 @@ const CreateField = () => {
                         placeholder="Описание"
                         maxLength={150}
                         value={announcements.description}
+                        onClick={() => {
+                            setTitle(userData.username.toString());  
+                        }}
                         onChange={(e) => {
                             setDescription(e.target.value);
-                            setTitle("erfer4"); // Установка имени пользователя как заголовка
                         }}
                     />
 
