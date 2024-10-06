@@ -14,6 +14,18 @@ const initMiniApp = () => {
     } 
     return actualInitMiniApp();
 };
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+
+    // Получаем компоненты даты
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Месяцы начинаются с 0
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    // Форматируем дату в нужный формат
+    return `${month}.${day} ${hours}:${minutes}`;
+};
 
 const MainScreen = () => {
     const [miniApp] = initMiniApp();
@@ -79,14 +91,23 @@ const MainScreen = () => {
                                 state={{ announcement }}
                                 key={announcement.id}
                             >
-                                <div className="annCard">
-                                    <div>
-                                        <h2>@{announcement.title} ищет людей для: {announcement.subcategory} - {announcement.category}</h2>
-                                        <hr style={{opacity: .3, maxWidth: "85%"}}/>
-                                        <p>Описание: {announcement.description}</p>                                    
-                                    </div>
-                                    <p className="CardId">id: {announcement.id}</p>
+                            <div className="annCard">
+                                <div>
+                                    <h2>@{announcement.title} ищет людей для: {announcement.subcategory} - {announcement.category}</h2>
+                                    <hr style={{ opacity: 0.3, maxWidth: "85%" }} />
+                                    <p>Описание: {announcement.description}</p>
                                 </div>
+
+                                <div className="CardIdContainer">
+                                    <p className="CardId">
+                                        Время {formatDate(announcement.created_at)}
+                                    </p>
+                                    <p className="CardId">
+                                        id: {announcement.id}
+                                    </p>
+                                </div>
+                            </div>
+
                             </Link>
                         ))}
                     </div>
