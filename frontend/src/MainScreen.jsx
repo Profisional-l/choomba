@@ -44,6 +44,8 @@ const MainScreen = () => {
         )
         : announcements;
 
+    const sortedAnnouncements = filteredAnnouncements.sort((a, b) => b.id - a.id);    
+
     useEffect(() => {
         // Установка цвета заголовка, если мы в окружении Telegram
         if (isTelegram) {
@@ -84,7 +86,7 @@ const MainScreen = () => {
             ) : (
                 <div style={{ marginTop: "40px", marginBottom: "40px" }}>
                     <div>
-                        {filteredAnnouncements.map((announcement) => (
+                        {sortedAnnouncements.map((announcement) => (
                             <Link
                                 className="link"
                                 to="/annpage"
