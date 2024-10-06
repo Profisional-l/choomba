@@ -69,7 +69,7 @@ const CreateField = () => {
         setIsErrorOccurred(false); // Сбрасываем состояние ошибки
     
         // Устанавливаем заголовок перед проверкой существующих объявлений
-        const title = userData.username.toString();  // Заголовок объявления
+        const title = userData.username;  // Заголовок объявления
         setTitle(title);
     
         try {
