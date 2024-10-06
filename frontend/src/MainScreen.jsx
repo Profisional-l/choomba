@@ -3,51 +3,49 @@ import { Link, useLocation } from "react-router-dom";
 import { AnnouncScript } from "./scripts/announcScript.js";
 import HelloMain from "./HelloMain/HelloMain.jsx";
 import { initMiniApp as actualInitMiniApp } from '@telegram-apps/sdk-react';
-import { initSwipeBehavior } from '@telegram-apps/sdk'; // Import swipe behavior
 
 const initMiniApp = () => {
+    // Проверка, открыто ли приложение в Telegram
     if (window.location.href.includes("localhost")) {
-        return [
-            {
-                setHeaderColor: (color) => console.log(`Header color set to: ${color}`),
-            },
-        ];
+        return [null, true]; // В локальной среде мы возвращаем null и true
     }
-    return actualInitMiniApp();
+    
+    // Попробуем инициализировать мини-приложение Telegram
+    try {
+        const miniApp = actualInitMiniApp();
+        return [miniApp, true];
+    } catch (error) {
+        console.error("Ошибка инициализации мини-приложения:", error);
+        return [null, false]; // Вернем null и false, если ошибка
+    }
 };
 
 const MainScreen = () => {
-    const [miniApp] = initMiniApp();
-    const isTelegram = !!miniApp;
+    const [miniApp, isTelegram] = initMiniApp(); // Используем новый способ инициализации
 
     const location = useLocation();
     const { category, subcategory, fromFindPage } = location.state || {};
     
-    // Состояние для отслеживания загрузки
     const [isLoading, setIsLoading] = useState(true);
     const { announcements } = AnnouncScript();
 
     const filteredAnnouncements = subcategory
-        ? announcements.filter(
-            (announcement) => announcement.subcategory === subcategory
-        )
+        ? announcements.filter(announcement => announcement.subcategory === subcategory)
         : announcements;
 
     useEffect(() => {
-        // Установка цвета заголовка, если мы в окружении Telegram
-        if (isTelegram) {
+        if (isTelegram && miniApp) {
             miniApp.setHeaderColor('#000000');
-
-            // Initialize swipe behavior and disable vertical swipe
             const [swipeBehavior] = initSwipeBehavior();
-            swipeBehavior.disableVerticalSwipe(); // Disable swipe down to minimize
+            swipeBehavior.disableVerticalSwipe();
         }
-        
-        // Имитация загрузки данных
-        setTimeout(() => {
-            setIsLoading(false); // Завершение загрузки
-        }, 500); // Задержка для демонстрации спиннера (можно убрать в реальной ситуации)
 
+        // Имитация загрузки данных
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 500);
+
+        return () => clearTimeout(timer); // Очистка таймера при размонтировании
     }, [isTelegram, miniApp]);
 
     return (
@@ -67,7 +65,6 @@ const MainScreen = () => {
                 </Link>
             )}
 
-            {/* Показываем спиннер/индикатор загрузки, пока идет загрузка */}
             {isLoading ? (
                 <div style={{ textAlign: "center", marginTop: "50px" }}>
                     <div className="spinner-container">
@@ -76,28 +73,23 @@ const MainScreen = () => {
                 </div>
             ) : (
                 <div style={{ marginTop: "40px", marginBottom: "40px" }}>
-                    <div>
-                        {filteredAnnouncements.map((announcement) => (
-                            <Link
-                                className="link"
-                                to="/annpage"
-                                state={{ announcement }}
-                                key={announcement.id}
-                            >
-                                <div className="annCard">
-                                    <div>
-                                        <h2>@{announcement.title} ищет людей для: {announcement.subcategory} - {announcement.category}</h2>
-                                        <hr style={{ opacity: .3, maxWidth: "85%" }} />
-                                        <p>Описание: {announcement.description}</p>
-                                    </div>
-                                    <p className="CardId">id: {announcement.id}</p>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
-                    <ul style={{ textAlign: "left" }}>
-                        {/* Другие элементы списка, если нужно */}
-                    </ul>
+                    {filteredAnnouncements.map(announcement => (
+                        <Link
+                            className="link"
+                            to="/annpage"
+                            state={{ announcement }}
+                            key={announcement.id}
+                        >
+                            <div className="annCard">
+                                <h2>
+                                    @{announcement.title} ищет людей для: {announcement.subcategory} - {announcement.category}
+                                </h2>
+                                <hr style={{ opacity: .3, maxWidth: "85%" }} />
+                                <p>Описание: {announcement.description}</p>
+                                <p className="CardId">id: {announcement.id}</p>
+                            </div>
+                        </Link>
+                    ))}
                 </div>
             )}
         </>
