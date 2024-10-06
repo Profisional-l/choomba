@@ -100,7 +100,7 @@ const MainScreen = () => {
 
                                 <div className="CardIdContainer">
                                     <p className="CardId">
-                                        Время {formatDate(announcement.created_at)}
+                                        {formatDate(announcement.created_at)}
                                     </p>
                                     <p className="CardId">
                                         id: {announcement.id}

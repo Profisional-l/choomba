@@ -3,6 +3,7 @@ import { AnnouncScript } from '../scripts/announcScript.js';
 import styles from './CreateField.module.css';
 import useUserData from '../scripts/takeTGinfo.js';
 import checkmarkImage from '../assets/checked.png'; // Путь к картинке с галочкой
+import ErrorCheckmarkImage from '../assets/error.png'; // Путь к картинке с крестиком
 import LoadCheckmarkImage from '../assets/loadingchecked.png'; // Путь к картинке загрузки
 
 const CreateField = () => {
@@ -19,6 +20,7 @@ const CreateField = () => {
     const [subCategoryError, setSubCategoryError] = useState(false);
     const [isLoading, setIsLoading] = useState(false); // Состояние загрузки
     const [isAnnouncementCreated, setIsAnnouncementCreated] = useState(false); // Состояние успешного создания объявления
+    const [isErrorOccurred, setIsErrorOccurred] = useState(false); // Состояние ошибки
 
     const categories = {
         activities: [
@@ -64,20 +66,22 @@ const CreateField = () => {
         }
         setSubCategoryError(false);
         setIsLoading(true); // Устанавливаем состояние загрузки в true
-        
+        setIsErrorOccurred(false); // Сбрасываем состояние ошибки
+
         try {
             const response = await fetch(`${API_URL}/announcements`);
 
             if (!response.ok) {
                 throw new Error('Ошибка при получении объявлений');
             }
+
             const existingAnnouncements = await response.json();
-            const title = userData.username.toString(); // Заголовок объявления
+            const title = setTitle(userData.username.toString());  // Заголовок объявления
             setTitle(title);
             const count = existingAnnouncements.filter(announcement => announcement.title === title).length;
 
             if (count >= 2) {
-                alert("Нельзя создавать более 2 объявлений одному человеку");
+                setIsErrorOccurred(true); // Устанавливаем состояние ошибки
                 setIsLoading(false); // Сбрасываем состояние загрузки
                 return;
             }
@@ -86,7 +90,7 @@ const CreateField = () => {
             setIsAnnouncementCreated(true); // Устанавливаем состояние успешного создания
         } catch (error) {
             console.error('Ошибка:', error);
-            alert('Произошла ошибка при создании объявления. Пожалуйста, попробуйте еще раз.');
+            setIsErrorOccurred(true); // Устанавливаем состояние ошибки
         } finally {
             setIsLoading(false); // Сбрасываем состояние загрузки
         }
@@ -103,6 +107,13 @@ const CreateField = () => {
                 <div className={styles.successMessage}>
                     <img src={LoadCheckmarkImage} alt="Галочка" className={styles.LoadcheckmarkImage} />
                     <h2>Объявление уже в пути!</h2>
+                </div>
+            ) : isErrorOccurred ? ( // Если произошла ошибка
+                <div className={styles.successMessage}>
+                    <img src={ErrorCheckmarkImage} alt="Галочка" className={styles.checkmarkImage} />
+                    <h2 style={{color: "#be2731"}}>Нельзя создавать более 2х объявлений!</h2>
+                     <h3>Удалите старые объявления и попробуйте еще раз  (◕‿◕)</h3>
+
                 </div>
             ) : ( // Обычный интерфейс для создания объявления
                 <>
