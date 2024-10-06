@@ -2,17 +2,22 @@ import React, { useState } from 'react';
 import { AnnouncScript } from '../scripts/announcScript.js';
 import styles from './CreateField.module.css';
 import useUserData from '../scripts/takeTGinfo.js';
+import checkmarkImage from '../assets/checked.png'; // Путь к вашей картинке с галочкой
+import LoadCheckmarkImage from '../assets/loadingchecked.png'; // Путь к вашей картинке с галочкой
 
 const CreateField = () => {
     const { announcements, createAnnouncement, setTitle, setDescription, setCategory, setSubCategory } = AnnouncScript();
     const userData = useUserData();
     
-    const [selectedCategory, setSelectedCategoryState] = useState('');  // Стейт для выбранной категории
-    const [subCategories, setSubCategories] = useState([]);  // Стейт для подкатегорий
-    const [selectedSubCategory, setSelectedSubCategory] = useState('');  // Стейт для выбранной подкатегории
-    const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);  // Стейт для модального окна категории
-    const [isSubCategoryModalOpen, setIsSubCategoryModalOpen] = useState(false);  // Стейт для модального окна подкатегории
-    
+    const [selectedCategory, setSelectedCategoryState] = useState('');
+    const [subCategories, setSubCategories] = useState([]);
+    const [selectedSubCategory, setSelectedSubCategory] = useState('');
+    const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+    const [isSubCategoryModalOpen, setIsSubCategoryModalOpen] = useState(false);
+    const [subCategoryError, setSubCategoryError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false); // Состояние загрузки
+    const [isAnnouncementCreated, setIsAnnouncementCreated] = useState(false); // Состояние успешного создания объявления
+
     const categories = {
         activities: [
             { value: 'sport', label: 'Спорт' },
@@ -24,111 +29,124 @@ const CreateField = () => {
         entertainment: ['Кино', 'Квизы', 'Настольные игры', 'Концерты', 'Квесты', 'Просто прогулка', 'Другое']
     };
 
-    // Функция для изменения выбранной категории
     const handleCategoryChange = (category) => {
-        setSelectedCategoryState(category);  // Установка выбранной категории
-        setCategory(category);  // Сохранение выбранной категории в скрипт
-        
-        // Установка подкатегорий в зависимости от выбранной категории
+        setSelectedCategoryState(category);
+        setCategory(category);
+
         if (category === 'Спорт') {
             setSubCategories(categories.sport);
         } else if (category === 'Компьютерные игры') {
             setSubCategories(categories.computerGames);
-        } 
-        else if (category === 'Развлечения') {
+        } else if (category === 'Развлечения') {
             setSubCategories(categories.entertainment);
-        }
-        else {
+        } else {
             setSubCategories([]);
         }
 
-        setSelectedSubCategory('');  // Сброс подкатегории
-        setIsCategoryModalOpen(false);  // Закрытие модального окна категории
+        setSelectedSubCategory('');
+        setIsCategoryModalOpen(false);
+        setSubCategoryError(false);
     };
 
-    // Функция для изменения подкатегории
     const handleSubCategoryChange = (subCategory) => {
         setSelectedSubCategory(subCategory);
-        setSubCategory(subCategory); // Установка подкатегории в состояние AnnouncScript
-        setIsSubCategoryModalOpen(false);  // Закрытие модального окна подкатегории
+        setSubCategory(subCategory);
+        setIsSubCategoryModalOpen(false);
+        setSubCategoryError(false);
     };
 
     const handleCreateAnnouncement = async () => {
         if (!selectedSubCategory && subCategories.length > 0) {
-            alert("Пожалуйста, выберите подкатегорию");
+            setSubCategoryError(true);
             return;
         }
+        setSubCategoryError(false);
+        setIsLoading(true); // Устанавливаем состояние загрузки в true
         await createAnnouncement(); // Создание объявления
+        setIsLoading(false); // Сбрасываем состояние загрузки
+        setIsAnnouncementCreated(true); // Устанавливаем состояние успешного создания
     };
 
     return (
         <div className={styles.CreatField}>
-            <h2>Создать объявление</h2>
-
-            {/* Кнопка выбора категории */}
-            <div className={styles.Selector_Cont}>
-                <button className={styles.select_button} onClick={() => setIsCategoryModalOpen(true)}>
-                    {selectedCategory ? `Категория: ${selectedCategory}` : 'Выберите категорию'}
-                </button>
-                {isCategoryModalOpen && (
-                    <div className={styles.modal}>
-                        <div className={styles.modal_content}>
-                            <ul>
-                                <h3>Выберите категорию:</h3> <br />
-                                {categories.activities.map((category) => (
-                                    <li key={category.value} onClick={() => handleCategoryChange(category.label)}>
-                                        {category.label}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        {/* Закрытие модального окна при клике вне его области */}
-                        <div className={styles.modal_overlay} onClick={() => setIsCategoryModalOpen(false)} />
-                    </div>
-                )}
-            </div>
-
-            {/* Кнопка выбора подкатегории появляется только при наличии подкатегорий */}
-            {subCategories.length > 0 && (
-                <div className={styles.Selector_Cont}>
-                    <button className={styles.select_button} onClick={() => setIsSubCategoryModalOpen(true)}>
-                        {selectedSubCategory ? `Подкатегория: ${selectedSubCategory}` : 'Выберите подкатегорию'}
-                    </button>
-                    {isSubCategoryModalOpen && (
-                        <div className={styles.modal}>
-                            <div className={styles.modal_content}>
-                                <ul>
-                                    <h3>Выберите подкатегорию:</h3> <br />
-                                    {subCategories.map((subCategory) => (
-                                        <li key={subCategory} onClick={() => handleSubCategoryChange(subCategory)}>
-                                            {subCategory}
-                                        </li>
-                                    ))}
-                                </ul>
+            {isAnnouncementCreated ? ( // Если объявление создано
+                <div className={styles.successMessage}>
+                    <img src={checkmarkImage} alt="Галочка" className={styles.checkmarkImage} />
+                    <h2>Объявление создано!</h2>
+                </div>
+            ) : isLoading ? ( // Если идет загрузка
+                <div className={styles.successMessage}>
+                    <img src={LoadCheckmarkImage} alt="Галочка" className={styles.LoadcheckmarkImage} />
+                    <h2>Объявление уже в пути!</h2>
+                </div>
+            ) : ( // Обычный интерфейс для создания объявления
+                <>
+                    <h2>Создать объявление</h2>
+                    <div className={styles.Selector_Cont}>
+                        <button className={styles.select_button} onClick={() => setIsCategoryModalOpen(true)}>
+                            {selectedCategory ? `Категория: ${selectedCategory}` : 'Выберите категорию'}
+                        </button>
+                        {isCategoryModalOpen && (
+                            <div className={styles.modal}>
+                                <div className={styles.modal_content}>
+                                    <ul>
+                                        <h3>Выберите категорию:</h3>
+                                        <br />
+                                        {categories.activities.map((category) => (
+                                            <li key={category.value} onClick={() => handleCategoryChange(category.label)}>
+                                                {category.label}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div className={styles.modal_overlay} onClick={() => setIsCategoryModalOpen(false)} />
                             </div>
-                            {/* Закрытие модального окна при клике вне его области */}
-                            <div className={styles.modal_overlay} onClick={() => setIsSubCategoryModalOpen(false)} />
+                        )}
+                    </div>
+
+                    {subCategories.length > 0 && (
+                        <div className={styles.Selector_Cont}>
+                            <button
+                                className={`${styles.select_button} ${subCategoryError ? styles.redborder : ''}`}
+                                onClick={() => setIsSubCategoryModalOpen(true)}
+                            >
+                                {selectedSubCategory ? `Подкатегория: ${selectedSubCategory}` : 'Выберите подкатегорию'}
+                            </button>
+                            {isSubCategoryModalOpen && (
+                                <div className={styles.modal}>
+                                    <div className={styles.modal_content}>
+                                        <ul>
+                                            <h3>Выберите подкатегорию:</h3>
+                                            <br />
+                                            {subCategories.map((subCategory) => (
+                                                <li key={subCategory} onClick={() => handleSubCategoryChange(subCategory)}>
+                                                    {subCategory}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    <div className={styles.modal_overlay} onClick={() => setIsSubCategoryModalOpen(false)} />
+                                </div>
+                            )}
                         </div>
                     )}
-                </div>
+
+                    <textarea
+                        className={styles.description_input}
+                        placeholder="Описание"
+                        maxLength={150}
+                        value={announcements.description}
+                        onChange={(e) => {
+                            setDescription(e.target.value);
+                            setTitle("erfer4"); // Установка имени пользователя как заголовка
+                        }}
+                    />
+
+                    <button className={styles.createBut} onClick={handleCreateAnnouncement}>
+                        Создать объявление
+                    </button>
+                </>
             )}
-
-            {/* Поле для ввода описания */}
-            <textarea
-                className={styles.description_input}
-                placeholder="Описание"
-                maxLength={150}
-                value={announcements.description}
-                onChange={(e) => {
-                    setDescription(e.target.value);  // Установка описания
-                    setTitle(userData.username.toString());  // Установка имени пользователя как заголовка
-                }}
-            />
-
-            {/* Кнопка для создания объявления */}
-            <button className={styles.createBut} onClick={handleCreateAnnouncement}>
-                Создать объявление
-            </button>
         </div>
     );
 };

@@ -64,7 +64,7 @@
   margin-top: 20px;
 }
 
-.select_button {
+.select_button, .select_button_sup {
   border-radius: 25px;
   background-color: #252525;
   border: solid 1px #ffffff15;
@@ -76,6 +76,10 @@
   font-size: 19px;
   cursor: pointer;
   max-width: 466.6px;
+}
+
+.redborder {
+  border: solid 1px #ff00009c;
 }
 
 .select_button:hover {
@@ -178,4 +182,31 @@
   backdrop-filter: blur(35px);
   /* Размытие заднего фона */
   z-index: 1000;
+}
+
+.checkmarkImage {
+  width: 100px;
+  margin-top: 20px;
+  opacity: 1;
+  animation: fadeIn .3s ease-in-out forwards;
+}
+
+.loadingMessage {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px; /* Настройте размер шрифта по необходимости */
+}
+
+.LoadcheckmarkImage {
+  width: 100px;
+  margin-top: 20px;
+  animation: spin .55s linear infinite; /* Анимация вращения */
+
+}
+
+
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
