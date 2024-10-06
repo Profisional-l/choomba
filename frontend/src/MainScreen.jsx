@@ -5,47 +5,44 @@ import HelloMain from "./HelloMain/HelloMain.jsx";
 import { initMiniApp as actualInitMiniApp } from '@telegram-apps/sdk-react';
 
 const initMiniApp = () => {
-    // Проверка, открыто ли приложение в Telegram
     if (window.location.href.includes("localhost")) {
-        return [null, true]; // В локальной среде мы возвращаем null и true
-    }
-    
-    // Попробуем инициализировать мини-приложение Telegram
-    try {
-        const miniApp = actualInitMiniApp();
-        return [miniApp, true];
-    } catch (error) {
-        console.error("Ошибка инициализации мини-приложения:", error);
-        return [null, false]; // Вернем null и false, если ошибка
-    }
+        return [
+            {
+                setHeaderColor: (color) => console.log(`Header color set to: ${color}`),
+            },
+        ];
+    } 
+    return actualInitMiniApp();
 };
 
 const MainScreen = () => {
-    const [miniApp, isTelegram] = initMiniApp(); // Используем новый способ инициализации
+    const [miniApp] = initMiniApp();
+    const isTelegram = !!miniApp;
 
     const location = useLocation();
     const { category, subcategory, fromFindPage } = location.state || {};
     
+    // Состояние для отслеживания загрузки
     const [isLoading, setIsLoading] = useState(true);
     const { announcements } = AnnouncScript();
 
     const filteredAnnouncements = subcategory
-        ? announcements.filter(announcement => announcement.subcategory === subcategory)
+        ? announcements.filter(
+            (announcement) => announcement.subcategory === subcategory
+        )
         : announcements;
 
     useEffect(() => {
-        if (isTelegram && miniApp) {
+        // Установка цвета заголовка, если мы в окружении Telegram
+        if (isTelegram) {
             miniApp.setHeaderColor('#000000');
-            const [swipeBehavior] = initSwipeBehavior();
-            swipeBehavior.disableVerticalSwipe();
         }
-
+        
         // Имитация загрузки данных
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 500);
+        setTimeout(() => {
+            setIsLoading(false); // Завершение загрузки
+        }, 500); // Задержка для демонстрации спиннера (можно убрать в реальной ситуации)
 
-        return () => clearTimeout(timer); // Очистка таймера при размонтировании
     }, [isTelegram, miniApp]);
 
     return (
@@ -65,31 +62,37 @@ const MainScreen = () => {
                 </Link>
             )}
 
+            {/* Показываем спиннер/индикатор загрузки, пока идет загрузка */}
             {isLoading ? (
                 <div style={{ textAlign: "center", marginTop: "50px" }}>
-                    <div className="spinner-container">
-                        <div className="spinner"></div>
-                    </div>
+                        <div className="spinner-container">
+                              <div className="spinner"></div>
+                        </div>
                 </div>
             ) : (
                 <div style={{ marginTop: "40px", marginBottom: "40px" }}>
-                    {filteredAnnouncements.map(announcement => (
-                        <Link
-                            className="link"
-                            to="/annpage"
-                            state={{ announcement }}
-                            key={announcement.id}
-                        >
-                            <div className="annCard">
-                                <h2>
-                                    @{announcement.title} ищет людей для: {announcement.subcategory} - {announcement.category}
-                                </h2>
-                                <hr style={{ opacity: .3, maxWidth: "85%" }} />
-                                <p>Описание: {announcement.description}</p>
-                                <p className="CardId">id: {announcement.id}</p>
-                            </div>
-                        </Link>
-                    ))}
+                    <div>
+                        {filteredAnnouncements.map((announcement) => (
+                            <Link
+                                className="link"
+                                to="/annpage"
+                                state={{ announcement }}
+                                key={announcement.id}
+                            >
+                                <div className="annCard">
+                                    <div>
+                                        <h2>@{announcement.title} ищет людей для: {announcement.subcategory} - {announcement.category}</h2>
+                                        <hr style={{opacity: .3, maxWidth: "85%"}}/>
+                                        <p>Описание: {announcement.description}</p>                                    
+                                    </div>
+                                    <p className="CardId">id: {announcement.id}</p>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                    <ul style={{ textAlign: "left" }}>
+                        {/* Другие элементы списка, если нужно */}
+                    </ul>
                 </div>
             )}
         </>
