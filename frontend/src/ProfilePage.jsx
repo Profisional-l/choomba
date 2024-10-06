@@ -25,7 +25,10 @@ const ProfilePage = () => {
           } else {
             console.error("Error fetching announcements:", data);
           }
-          setIsLoading(false); // Отключаем состояние загрузки после получения данных
+          // Искусственная задержка в полсекунды
+          setTimeout(() => {
+            setIsLoading(false); // Отключаем состояние загрузки после задержки
+          }, 500); // Задержка в 500 мс
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -64,7 +67,7 @@ const ProfilePage = () => {
         {userData ? (
           <div>
             <h2>{userData.username}, ку! 👋</h2>
-            {(userData.id == 1181442479) || (userData.id == 548461454) ? (
+            {(userData.id === 1181442479 || userData.id === 548461454) ? (
               <div style={{ marginTop: "40px" }}>
                 <hr />
                 <h3>Удалить объявление по ID:</h3>
@@ -76,9 +79,7 @@ const ProfilePage = () => {
                 />
                 <button onClick={handleDeleteById}>Удалить по ID</button>
               </div>
-            ) : (
-              <div></div>
-            )}
+            ) : null}
           </div>
         ) : (
           <p>Запущено вне Telegram</p>
@@ -90,11 +91,11 @@ const ProfilePage = () => {
 
           {/* Спиннер, пока идет загрузка */}
           {isLoading ? (
-                        <div style={{ textAlign: "center", marginTop: "50px" }}>
-                           <div className="spinner-container">
-                                 <div className="spinner"></div>
-                           </div>
-                   </div>
+            <div style={{ textAlign: "center", marginTop: "50px" }}>
+              <div className="spinner-container">
+                <div className="spinner"></div>
+              </div>
+            </div>
           ) : userAnnouncements.length > 0 ? (
             <div>
               {userAnnouncements.map((announcement) => (
