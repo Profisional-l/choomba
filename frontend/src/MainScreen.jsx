@@ -116,15 +116,19 @@ const MainScreen = () => {
                                 <div>
                                     <h2>@{announcement.title} ищет людей для: {announcement.subcategory} - {announcement.category}</h2>
                                     <hr style={{ opacity: 0.3, maxWidth: "85%" }} />
-                                    <p>Описание: {announcement.description}</p>
                                 </div>
-                                <div className="imageContainer">
-                                <img src={imageMap[announcement.subcategory] || 'src/assets/subcat_pictures/default.jpg'} 
-                                    alt={announcement.subcategory} 
-                                    className="announcementImage" 
-                                />
-                            </div>
-
+                                <div className="DescContainer">
+                                    <img 
+                                        src={imageMap[announcement.subcategory] || 'src/assets/subcat_pictures/default.jpg'} 
+                                        alt={announcement.subcategory} 
+                                        className="announcementImage" 
+                                    />
+                                     <p className="descriptionText"> <b className="textdesc">Описание: </b><br />
+                                        {announcement.description.length > 50 
+                                            ? `${announcement.description.substring(0, 50)}...` 
+                                            : announcement.description}
+                                    </p>
+                                </div>
                                 <div className="CardIdContainer">
                                     <p className="CardId">
                                         {formatDate(announcement.created_at)}
@@ -134,6 +138,7 @@ const MainScreen = () => {
                                     </p>
                                 </div>
                             </div>
+                                                    
 
                             </Link>
                         ))}

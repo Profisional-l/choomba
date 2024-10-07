@@ -216,6 +216,37 @@ input:hover {
   justify-content: space-between; /* Размещает элементы по краям */
   align-items: center; /* Выравнивает элементы по центру по вертикали */
   margin-top: 10px; /* Добавьте отступ сверху, если нужно */
+
+
+}
+
+.DescContainer {
+  display: flex;
+  align-items: flex-start; /* выравнивание по верхнему краю */
+}
+
+.announcementImage {
+  flex: 0 0 30%; /* фиксированная ширина 30% */
+  max-width: 120px; /* не растягивается за пределы контейнера */
+  height: auto; /* сохраняет пропорции изображения */
+  object-fit: cover; /* обрезает изображение, чтобы оно не искажалось */
+  border-radius: 30px;
+  margin: 10px;
+}
+
+.descriptionText {
+  flex: 1; /* занимает оставшееся пространство */
+  margin-left: 10px; /* отступ между изображением и текстом */
+  overflow: hidden; /* скрывает текст, выходящий за пределы */
+  text-overflow: ellipsis; /* добавляет многоточие, если текст слишком длинный */
+  max-height: 120px;
+  overflow: hidden;
+  line-height: 23px;
+}
+
+.textdesc {
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .deleted {
