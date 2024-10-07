@@ -23,7 +23,6 @@ import questsImage from './assets/subcat_pictures/quests.png';
 import otherImage from  './assets/subcat_pictures/otherLogo.png';
 
 
-
 const initMiniApp = () => {
     
     if (window.location.href.includes("localhost")) {
