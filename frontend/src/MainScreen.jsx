@@ -20,7 +20,7 @@ import kvizImage from './assets/subcat_pictures/kviz.png';
 import boardgamesImage from './assets/subcat_pictures/boardgames.png';
 import concertImage from './assets/subcat_pictures/concert.png';
 import questsImage from './assets/subcat_pictures/quests.png';
-import otherImage from  './assets/subcat_pictures/otherLogo.png';
+import anyImage from  './assets/subcat_pictures/any.png';
 
 
 const initMiniApp = () => {
@@ -63,8 +63,8 @@ const imageMap = {
     'Настольные игры': boardgamesImage,
     'Концерты': concertImage,
     'Квесты': questsImage,
-    'Другое':  otherImage,
-    'Просто прогулка'  : otherImage
+    'Другое':  anyImage,
+    'Просто прогулка'  : anyImage
 };
 const MainScreen = () => {
     const [miniApp] = initMiniApp();
