@@ -13,7 +13,7 @@ kb.add(gaz, ds_server, support)
 
 
 def forward(message):
-    bot.forward_message(chat_id='@leopepsi122', from_chat_id = message.chat.id, message_id=message.id)
+    bot.forward_message(chat_id='-2421410827', from_chat_id = message.chat.id, message_id=message.id)
     bot.send_message(message.chat.id, "Спасибо за вашу помощь!")
 
 
