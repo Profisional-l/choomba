@@ -26,7 +26,26 @@ const formatDate = (dateString) => {
     // Форматируем дату в нужный формат
     return `${day}.${month} ${hours}:${minutes}`;
 };
-
+const imageMap = {
+    'CS2': 'src/assets/subcat_pictures/cs2.jpg',
+    'Dota 2': 'path/to/dota2-image.jpg',
+    'PUBG': 'path/to/pubg-image.jpg',
+    'Fortnite': 'path/to/fortnite-image.jpg',
+    'Warzone': 'path/to/warzone-image.jpg',
+    'Apex Legends': 'path/to/apex-legends-image.jpg',
+    'Футбол': 'src/assets/subcat_pictures/cs2.jpg',
+    'Баскетбол': 'path/to/dota2-image.jpg',
+    'Волейбол': 'path/to/pubg-image.jpg',
+    'Хоккей': 'path/to/fortnite-image.jpg',
+    'Теннис': 'path/to/warzone-image.jpg',
+    'Кино': 'path/to/apex-legends-image.jpg',
+    'Квизы': 'src/assets/subcat_pictures/cs2.jpg',
+    'Настольные игры': 'path/to/dota2-image.jpg',
+    'Концерты': 'path/to/pubg-image.jpg',
+    'Квесты': 'path/to/fortnite-image.jpg',
+    'Просто прогулка': 'path/to/warzone-image.jpg',
+    'Другое': 'path/to/apex-legends-image.jpg',
+}
 const MainScreen = () => {
     const [miniApp] = initMiniApp();
     const isTelegram = !!miniApp;
@@ -99,6 +118,12 @@ const MainScreen = () => {
                                     <hr style={{ opacity: 0.3, maxWidth: "85%" }} />
                                     <p>Описание: {announcement.description}</p>
                                 </div>
+                                <div className="imageContainer">
+                                <img src={imageMap[announcement.subcategory] || 'src/assets/subcat_pictures/default.jpg'} 
+                                    alt={announcement.subcategory} 
+                                    className="announcementImage" 
+                                />
+                            </div>
 
                                 <div className="CardIdContainer">
                                     <p className="CardId">
