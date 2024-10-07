@@ -242,6 +242,7 @@ input:hover {
   max-height: 120px;
   overflow: hidden;
   line-height: 23px;
+  background: url();
 }
 
 .textdesc {

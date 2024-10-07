@@ -4,6 +4,24 @@ import { AnnouncScript } from "./scripts/announcScript.js";
 import HelloMain from "./HelloMain/HelloMain.jsx";
 import { initMiniApp as actualInitMiniApp } from '@telegram-apps/sdk-react';
 
+import cs2Image from './assets/subcat_pictures/cs2.jpg';
+import dota2Image from './assets/subcat_pictures/dota2.png';
+import pubgImage from './assets/subcat_pictures/pubg.png';
+import fortniteImage from './assets/subcat_pictures/fortnite.png';
+import warzoneImage from './assets/subcat_pictures/warzone.png';
+import apexImage from './assets/subcat_pictures/apex.png';
+import footballImage from './assets/subcat_pictures/football.png';
+import basketballImage from './assets/subcat_pictures/basketball.png';
+import voleyballImage from './assets/subcat_pictures/voleyball.png';
+import hockeyImage from './assets/subcat_pictures/hockey.png';
+import tenisImage from './assets/subcat_pictures/tenis.png';
+import cinemaImage from './assets/subcat_pictures/cinema.png';
+import kvizImage from './assets/subcat_pictures/kviz.png';
+import boardgamesImage from './assets/subcat_pictures/boardgames.png';
+import concertImage from './assets/subcat_pictures/concert.png';
+import questsImage from './assets/subcat_pictures/quests.png';
+
+
 const initMiniApp = () => {
     
     if (window.location.href.includes("localhost")) {
@@ -28,25 +46,24 @@ const formatDate = (dateString) => {
     return `${day}.${month} ${hours}:${minutes}`;
 };
 const imageMap = {
-    'CS2': './assets/subcat_pictures/cs2.jpg',
-    'Dota 2': './assets/subcat_pictures/dota2.png',
-    'PUBG': './assets/subcat_pictures/pubg.png',
-    'Fortnite': './assets/subcat_pictures/fortnite.png',
-    'Warzone': './assets/subcat_pictures/warzone.png',
-    'Apex Legends': './assets/subcat_pictures/apex.png',
-    'Футбол': './assets/subcat_pictures/football.png',
-    'Баскетбол': './assets/subcat_pictures/basketball.png',
-    'Волейбол': './assets/subcat_pictures/voleyball.png',
-    'Хоккей': './assets/subcat_pictures/hockey.png',
-    'Теннис': './assets/subcat_pictures/tenis.png',
-    'Кино': './assets/subcat_pictures/cinema.png',
-    'Квизы': './assets/subcat_pictures/kviz.png',
-    'Настольные игры': './assets/subcat_pictures/boardgames.png',
-    'Концерты': './assets/subcat_pictures/concert.png',
-    'Квесты': './assets/subcat_pictures/quests.png',
-    'Просто прогулка': './assets/subcat_pictures/park.png',
-    'Другое': './assets/subcat_pictures/other.png',
-}
+    'CS2': cs2Image,
+    'Dota 2': dota2Image,
+    'PUBG': pubgImage,
+    'Fortnite': fortniteImage,
+    'Warzone': warzoneImage,
+    'Apex Legends': apexImage,
+    'Футбол': footballImage,
+    'Баскетбол': basketballImage,
+    'Волейбол': voleyballImage,
+    'Хоккей': hockeyImage,
+    'Теннис': tenisImage,
+    'Кино': cinemaImage,
+    'Квизы': kvizImage,
+    'Настольные игры': boardgamesImage,
+    'Концерты': concertImage,
+    'Квесты': questsImage
+
+};
 const MainScreen = () => {
     const [miniApp] = initMiniApp();
     const isTelegram = !!miniApp;
