@@ -34,8 +34,21 @@ const Navbar = () => {
   }
   // -----------------------------------------------------------------------------------
 
+  
+function bgactivate() {
+  setTimeout((
+    () => {
+      document.querySelector('.background').classList.add('visible');
+    }
+  ),  600);
+    
+}
+
+
   return (
     <div>
+          <div  className="background"></div>
+          {bgactivate()}
       <div>
         <SwitchTransition>
           <CSSTransition

@@ -5,6 +5,7 @@ import HelloMain from "./HelloMain/HelloMain.jsx";
 import { initMiniApp as actualInitMiniApp } from '@telegram-apps/sdk-react';
 
 const initMiniApp = () => {
+    
     if (window.location.href.includes("localhost")) {
         return [
             {
@@ -27,24 +28,24 @@ const formatDate = (dateString) => {
     return `${day}.${month} ${hours}:${minutes}`;
 };
 const imageMap = {
-    'CS2': 'src/assets/subcat_pictures/cs2.jpg',
-    'Dota 2': 'src/assets/subcat_pictures/dota2.png',
-    'PUBG': 'src/assets/subcat_pictures/pubg.png',
-    'Fortnite': 'src/assets/subcat_pictures/fortnite.png',
-    'Warzone': 'src/assets/subcat_pictures/warzone.png',
-    'Apex Legends': 'src/assets/subcat_pictures/apex.png',
-    'Футбол': 'src/assets/subcat_pictures/football.png',
-    'Баскетбол': 'src/assets/subcat_pictures/basketball.png',
-    'Волейбол': 'src/assets/subcat_pictures/voleyball.png',
-    'Хоккей': 'src/assets/subcat_pictures/hockey.png',
-    'Теннис': 'src/assets/subcat_pictures/tenis.png',
-    'Кино': 'src/assets/subcat_pictures/cinema.png',
-    'Квизы': 'src/assets/subcat_pictures/kviz.png',
-    'Настольные игры': 'src/assets/subcat_pictures/boardgames.png',
-    'Концерты': 'src/assets/subcat_pictures/concert.png',
-    'Квесты': 'src/assets/subcat_pictures/quests.png',
-    'Просто прогулка': 'src/assets/subcat_pictures/park.png',
-    'Другое': 'src/assets/subcat_pictures/other.png',
+    'CS2': './src/assets/subcat_pictures/cs2.jpg',
+    'Dota 2': './src/assets/subcat_pictures/dota2.png',
+    'PUBG': './src/assets/subcat_pictures/pubg.png',
+    'Fortnite': './src/assets/subcat_pictures/fortnite.png',
+    'Warzone': './src/assets/subcat_pictures/warzone.png',
+    'Apex Legends': './src/assets/subcat_pictures/apex.png',
+    'Футбол': './src/assets/subcat_pictures/football.png',
+    'Баскетбол': './src/assets/subcat_pictures/basketball.png',
+    'Волейбол': './src/assets/subcat_pictures/voleyball.png',
+    'Хоккей': './src/assets/subcat_pictures/hockey.png',
+    'Теннис': './src/assets/subcat_pictures/tenis.png',
+    'Кино': './src/assets/subcat_pictures/cinema.png',
+    'Квизы': './src/assets/subcat_pictures/kviz.png',
+    'Настольные игры': './src/assets/subcat_pictures/boardgames.png',
+    'Концерты': './src/assets/subcat_pictures/concert.png',
+    'Квесты': './src/assets/subcat_pictures/quests.png',
+    'Просто прогулка': './src/assets/subcat_pictures/park.png',
+    'Другое': './src/assets/subcat_pictures/other.png',
 }
 const MainScreen = () => {
     const [miniApp] = initMiniApp();
