@@ -3,11 +3,17 @@ import { createRoot } from 'react-dom/client';
 import App from './App.jsx';
 import './index.css';
 import { SDKProvider } from '@telegram-apps/sdk-react';
-import Head from './Head.jsx';
+import Head from './Head.jsx'
+
+window.onload = function() {
+  document.querySelector('.background').classList.add('visible');
+};
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <SDKProvider acceptCustomStyles debug>
+    <div  className="background"></div>
+
       <Head />
       <App />
     </SDKProvider>
