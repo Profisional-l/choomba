@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const categories = [
   {
     name: "Спорт",
-    subcategories: ["Футбол", "Баскетбол", "Волейбол", "Тенис", "Хоккей"],
+    subcategories: ["Футбол", "Баскетбол", "Волейбол", "Теннис", "Хоккей"],
   },
   {
     name: "Компьютерные игры",
