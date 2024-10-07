@@ -24,7 +24,7 @@ const formatDate = (dateString) => {
     const minutes = String(date.getMinutes()).padStart(2, '0');
 
     // Форматируем дату в нужный формат
-    return `${month}.${day} ${hours}:${minutes}`;
+    return `${day}.${month} ${hours}:${minutes}`;
 };
 
 const MainScreen = () => {
