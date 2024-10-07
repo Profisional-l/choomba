@@ -106,8 +106,7 @@ const ProfilePage = () => {
                   key={announcement.id}
                 >
                   <h2>
-                    @{announcement.title} - {announcement.description} |
-                    {announcement.category}
+                  {announcement.subcategory} | {announcement.description} |
                   </h2>
                   <br />
 
