@@ -11,10 +11,12 @@ const categories = [
     subcategories: [
       "CS2",
       "Dota 2",
+      "Valorant",
       "PUBG",
       "Fortnite",
       "Warzone",
       "Apex Legends",
+      "Другие игры"
     ],
   },
   {

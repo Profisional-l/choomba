@@ -29,7 +29,7 @@ const CreateField = () => {
             { value: 'entertainment', label: 'Развлечения' }
         ],
         sport: ['Футбол', 'Баскетбол', 'Волейбол', 'Теннис', 'Хоккей'],
-        computerGames: ['CS2', 'Dota 2', 'PUBG', 'Fortnite', 'Warzone', 'Apex Legends'],
+        computerGames: ['CS2', 'Dota 2', 'Valorant', 'PUBG', 'Fortnite', 'Warzone', 'Apex Legends', 'Другие игры'],
         entertainment: ['Кино', 'Квизы', 'Настольные игры', 'Концерты', 'Квесты', 'Просто прогулка', 'Другое']
     };
 
@@ -69,7 +69,7 @@ const CreateField = () => {
         setIsErrorOccurred(false); // Сбрасываем состояние ошибки
     
         // Устанавливаем заголовок перед проверкой существующих объявлений
-        const title = userData.username;  // Заголовок объявления
+        const title = userData.username;
         setTitle(title);
     
         try {
@@ -178,7 +178,7 @@ const CreateField = () => {
                         maxLength={150}
                         value={announcements.description}
                         onClick={() => {
-                            setTitle(userData.username.toString());  
+                            setTitle(userData.username.toString());
                         }}
                         onChange={(e) => {
                             setDescription(e.target.value);
