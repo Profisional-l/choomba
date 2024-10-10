@@ -23,8 +23,6 @@ const categories = [
       "Fortnite",
       "Warzone",
       "Apex Legends",
-      "Другие игры",
-      "Valorant",
       "Overwatch",
       "Другие игры",
     ],
