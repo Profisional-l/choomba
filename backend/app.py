@@ -1,3 +1,4 @@
+import os
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import sqlite3
@@ -12,20 +13,25 @@ def get_db_connection():
     return connection
 
 def init_db():
-    connection = get_db_connection()
-    cursor = connection.cursor()
-    cursor.execute('''
-    CREATE TABLE IF NOT EXISTS Announcements (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        description TEXT NOT NULL,
-        category TEXT NOT NULL,  -- Добавляем новый столбец для категории
-        subcategory TEXT,  -- Добавляем новый столбец для подкатегории
-        created_at TEXT
-    )
-    ''')
-    connection.commit()
-    connection.close()
+    # Проверяем, существует ли файл базы данных
+    if not os.path.exists('database.db'):
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS Announcements (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            description TEXT NOT NULL,
+            category TEXT NOT NULL,
+            subcategory TEXT,
+            created_at TEXT
+        )
+        ''')
+        connection.commit()
+        connection.close()
+        print("Database initialized and table created.")
+    else:
+        print("Database already exists. No need to initialize.")
 
 @app.route('/send_userid', methods=['POST'])
 def send_userid():
