@@ -232,6 +232,8 @@ input:hover {
   object-fit: cover; /* обрезает изображение, чтобы оно не искажалось */
   border-radius: 30px;
   margin: 10px;
+  opacity: 0;
+  animation: AnnFadeIn .23s  ease-in-out forwards;
 }
 
 .descriptionText {

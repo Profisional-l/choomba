@@ -4,7 +4,14 @@ import { useNavigate } from "react-router-dom";
 const categories = [
   {
     name: "Спорт",
-    subcategories: ["Футбол", "Баскетбол", "Волейбол", "Теннис", "Хоккей"],
+    subcategories: [
+      "Футбол",
+      "Баскетбол",
+      "Волейбол",
+      "Теннис",
+      "Хоккей",
+      "Другое",
+    ],
   },
   {
     name: "Компьютерные игры",
@@ -16,7 +23,22 @@ const categories = [
       "Fortnite",
       "Warzone",
       "Apex Legends",
-      "Другие игры"
+      "Другие игры",
+      "Valorant",
+      "Overwatch",
+      "Другое",
+    ],
+  },
+  {
+    name: "Мобильные игры",
+    subcategories: [
+      "Brawl Stars",
+      "PUBG Mobile",
+      "Standoff 2",
+      "Free Fire",
+      "League of Legends",
+      "Genshin Impact",
+      "Другое",
     ],
   },
   {

@@ -26,10 +26,14 @@ const CreateField = () => {
         activities: [
             { value: 'sport', label: 'Спорт' },
             { value: 'computerGames', label: 'Компьютерные игры' },
+            { value: 'computerGames', label: 'Мобильные игры' },
             { value: 'entertainment', label: 'Развлечения' }
         ],
         sport: ['Футбол', 'Баскетбол', 'Волейбол', 'Теннис', 'Хоккей'],
         computerGames: ['CS2', 'Dota 2', 'Valorant', 'PUBG', 'Fortnite', 'Warzone', 'Apex Legends', 'Другие игры'],
+        sport: ['Футбол', 'Баскетбол', 'Волейбол', 'Теннис', 'Хоккей', 'Другое'],
+        computerGames: ['CS2', 'Dota 2', 'PUBG', 'Fortnite', 'Warzone', 'Apex Legends', 'Valorant', 'Другое'],
+        mobileGames: ['Brawl Stars', 'PUBG Mobile', 'Standoff 2', 'Free Fire', 'League of Legends', 'Другое'],
         entertainment: ['Кино', 'Квизы', 'Настольные игры', 'Концерты', 'Квесты', 'Просто прогулка', 'Другое']
     };
 
@@ -41,6 +45,8 @@ const CreateField = () => {
             setSubCategories(categories.sport);
         } else if (category === 'Компьютерные игры') {
             setSubCategories(categories.computerGames);
+        } else if (category === 'Мобильные игры') {
+            setSubCategories(categories.mobileGames);
         } else if (category === 'Развлечения') {
             setSubCategories(categories.entertainment);
         } else {
@@ -110,12 +116,12 @@ const CreateField = () => {
                 </div>
             ) : isLoading ? ( // Если идет загрузка
                 <div className={styles.successMessage}>
-                    <img src={LoadCheckmarkImage} alt="Галочка" className={styles.LoadcheckmarkImage} />
+                    <img src={LoadCheckmarkImage} alt="Загрузка" className={styles.LoadcheckmarkImage} />
                     <h2>Объявление уже в пути!</h2>
                 </div>
             ) : isErrorOccurred ? ( // Если произошла ошибка
                 <div className={styles.successMessage}>
-                    <img src={ErrorCheckmarkImage} alt="Галочка" className={styles.checkmarkImage} />
+                    <img src={ErrorCheckmarkImage} alt="Крестик" className={styles.checkmarkImage} />
                     <h2 style={{color: "#be2731"}}>Нельзя создавать более 2х объявлений!</h2>
                      <h3>Удалите старые объявления и попробуйте еще раз  (◕‿◕)</h3>
 
