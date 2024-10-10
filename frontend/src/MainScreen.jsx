@@ -10,6 +10,16 @@ import pubgImage from './assets/subcat_pictures/pubg.png';
 import fortniteImage from './assets/subcat_pictures/fortnite.png';
 import warzoneImage from './assets/subcat_pictures/warzone.png';
 import apexImage from './assets/subcat_pictures/apex.png';
+import valorantImage from  './assets/subcat_pictures/valorant.png';
+import overwatchImage from  './assets/subcat_pictures/overwatch.png';
+
+import brawlstarsImage from  './assets/subcat_pictures/brawlstars.png';
+import pubgmobileImage from  './assets/subcat_pictures/pubgmobile.png';
+import standoffImage from  './assets/subcat_pictures/standoff.png';
+import freefireImage from  './assets/subcat_pictures/freefire.png';
+import lolImage from  './assets/subcat_pictures/lol.png';
+import genshinImage from  './assets/subcat_pictures/genshin.png';
+
 import footballImage from './assets/subcat_pictures/football.png';
 import basketballImage from './assets/subcat_pictures/basketball.png';
 import voleyballImage from './assets/subcat_pictures/voleyball.png';
@@ -53,6 +63,14 @@ const imageMap = {
     'Fortnite': fortniteImage,
     'Warzone': warzoneImage,
     'Apex Legends': apexImage,
+    'Valorant': valorantImage,
+    'Overwatch': overwatchImage,
+    'Brawl Stars': brawlstarsImage,
+    'PUBG Mobile': pubgmobileImage,
+    'Standoff 2': standoffImage,
+    'Free Fire': freefireImage,
+    'League of Legends': lolImage,
+    'Genshin Impact': genshinImage,
     'Футбол': footballImage,
     'Баскетбол': basketballImage,
     'Волейбол': voleyballImage,
