@@ -8,13 +8,13 @@ app = Flask(__name__)
 CORS(app)
 
 def get_db_connection():
-    connection = sqlite3.connect('database.db')
+    connection = sqlite3.connect('choomba/backend/database.db')
     connection.row_factory = sqlite3.Row
     return connection
 
 def init_db():
     # Проверяем, существует ли файл базы данных
-    if not os.path.exists('database.db'):
+    if not os.path.exists('choomba/backend/database.db'):
         connection = get_db_connection()
         cursor = connection.cursor()
         cursor.execute('''
