@@ -1,3 +1,5 @@
+version: '3.8'
+
 networks:
   dev:
 
@@ -21,6 +23,8 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    volumes:
+      - db_data:/choomba/backend  # Используем том для хранения базы данных
     networks:
       - dev
 
@@ -30,3 +34,6 @@ services:
       dockerfile: Dockerfile
     networks:
       - dev
+
+volumes:
+  db_data:  # Определяем том для базы данных

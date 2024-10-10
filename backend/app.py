@@ -7,14 +7,16 @@ from datetime import datetime, timedelta
 app = Flask(__name__)
 CORS(app)
 
+DATABASE_PATH = 'choomba/backend/database.db'
+
 def get_db_connection():
-    connection = sqlite3.connect('choomba/backend/database.db')
+    connection = sqlite3.connect(DATABASE_PATH)
     connection.row_factory = sqlite3.Row
     return connection
 
 def init_db():
     # Проверяем, существует ли файл базы данных
-    if not os.path.exists('choomba/backend/database.db'):
+    if not os.path.exists(DATABASE_PATH):
         connection = get_db_connection()
         cursor = connection.cursor()
         cursor.execute('''
@@ -42,7 +44,6 @@ def send_userid():
         return jsonify({"status": "success", "userID": user_id})
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
-
 
 @app.route('/announcements', methods=['GET', 'POST'])
 def handle_announcements():
@@ -80,9 +81,6 @@ def handle_announcements():
                              'created_at': a['created_at']} for a in announcements])
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
-
-
-
 
 @app.route('/announcements/user/<string:username>', methods=['GET'])
 def get_user_announcements(username):
