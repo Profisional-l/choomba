@@ -29,11 +29,9 @@ const CreateField = () => {
             { value: 'computerGames', label: 'Мобильные игры' },
             { value: 'entertainment', label: 'Развлечения' }
         ],
-        sport: ['Футбол', 'Баскетбол', 'Волейбол', 'Теннис', 'Хоккей'],
-        computerGames: ['CS2', 'Dota 2', 'Valorant', 'PUBG', 'Fortnite', 'Warzone', 'Apex Legends', 'Другие игры'],
         sport: ['Футбол', 'Баскетбол', 'Волейбол', 'Теннис', 'Хоккей', 'Другое'],
-        computerGames: ['CS2', 'Dota 2', 'PUBG', 'Fortnite', 'Warzone', 'Apex Legends', 'Valorant', 'Другое'],
-        mobileGames: ['Brawl Stars', 'PUBG Mobile', 'Standoff 2', 'Free Fire', 'League of Legends', 'Другое'],
+        computerGames: ['CS2', 'Dota 2', 'PUBG', 'Fortnite', 'Warzone', 'Apex Legends', 'Valorant', 'Другие игры'],
+        mobileGames: ['Brawl Stars', 'PUBG Mobile', 'Standoff 2', 'Free Fire', 'League of Legends', 'Другое игры'],
         entertainment: ['Кино', 'Квизы', 'Настольные игры', 'Концерты', 'Квесты', 'Просто прогулка', 'Другое']
     };
 

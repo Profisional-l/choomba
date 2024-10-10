@@ -82,6 +82,7 @@ const imageMap = {
     'Концерты': concertImage,
     'Квесты': questsImage,
     'Другое':  anyImage,
+    'Другие игры':  anyImage,
     'Просто прогулка'  : anyImage
 };
 const MainScreen = () => {

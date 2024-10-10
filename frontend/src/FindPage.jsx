@@ -26,7 +26,7 @@ const categories = [
       "Другие игры",
       "Valorant",
       "Overwatch",
-      "Другое",
+      "Другие игры",
     ],
   },
   {
@@ -38,7 +38,7 @@ const categories = [
       "Free Fire",
       "League of Legends",
       "Genshin Impact",
-      "Другое",
+      "Другие игры",
     ],
   },
   {
