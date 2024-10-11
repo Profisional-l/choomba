@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { AnnouncScript } from '../scripts/announcScript.js';
 import styles from './CreateField.module.css';
 import useUserData from '../scripts/takeTGinfo.js';
-import checkmarkImage from '../assets/checked.png'; // Путь к картинке с галочкой
-import ErrorCheckmarkImage from '../assets/error.png'; // Путь к картинке с крестиком
-import LoadCheckmarkImage from '../assets/loadingchecked.png'; // Путь к картинке загрузки
+import checkmarkImage from '../assets/checked.png'; 
+import ErrorCheckmarkImage from '../assets/error.png'; 
+import LoadCheckmarkImage from '../assets/loadingchecked.png'; 
 
 const CreateField = () => {
     const { announcements, createAnnouncement, setTitle, setDescription, setCategory, setSubCategory } = AnnouncScript();
@@ -18,9 +18,12 @@ const CreateField = () => {
     const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
     const [isSubCategoryModalOpen, setIsSubCategoryModalOpen] = useState(false);
     const [subCategoryError, setSubCategoryError] = useState(false);
-    const [isLoading, setIsLoading] = useState(false); // Состояние загрузки
-    const [isAnnouncementCreated, setIsAnnouncementCreated] = useState(false); // Состояние успешного создания объявления
-    const [isErrorOccurred, setIsErrorOccurred] = useState(false); // Состояние ошибки
+    const [isLoading, setIsLoading] = useState(false);
+    const [isAnnouncementCreated, setIsAnnouncementCreated] = useState(false);
+    const [isErrorOccurred, setIsErrorOccurred] = useState(false);
+    const [isDescriptionError, setIsDescriptionError] = useState(false);
+    const [isCategoryError, setIsCategoryError] = useState(false); // Новое состояние для проверки категории
+    const [description, setDescriptionState] = useState(''); // Управление состоянием description внутри компонента
 
     const categories = {
         activities: [
@@ -38,6 +41,7 @@ const CreateField = () => {
     const handleCategoryChange = (category) => {
         setSelectedCategoryState(category);
         setCategory(category);
+        setIsCategoryError(false); // Сбрасываем ошибку при выборе категории
 
         if (category === 'Спорт') {
             setSubCategories(categories.sport);
@@ -64,71 +68,83 @@ const CreateField = () => {
     };
 
     const handleCreateAnnouncement = async () => {
+        if (!description || !description.trim()) {
+            setIsDescriptionError(true);  
+            return;
+        }
+
+        setIsDescriptionError(false); 
+
         if (!selectedSubCategory && subCategories.length > 0) {
             setSubCategoryError(true);
             return;
         }
+
+        if (!selectedCategory) { // Проверка, выбрана ли категория
+            setIsCategoryError(true);
+            return;
+        }
+
         setSubCategoryError(false);
-        setIsLoading(true); // Устанавливаем состояние загрузки в true
-        setIsErrorOccurred(false); // Сбрасываем состояние ошибки
-    
-        // Устанавливаем заголовок перед проверкой существующих объявлений
-        const title = userData.username;
+        setIsLoading(true);
+        setIsErrorOccurred(false);
+
+        const title = userData.title;
         setTitle(title);
-    
+
         try {
             const response = await fetch(`${API_URL}/announcements`);
-    
+
             if (!response.ok) {
                 throw new Error('Ошибка при получении объявлений');
             }
-    
+
             const existingAnnouncements = await response.json();
-            
-            // Здесь используем установленный заголовок для фильтрации
+
             const count = existingAnnouncements.filter(announcement => announcement.title === title).length;
-    
+
             if (count >= 2) {
-                setIsErrorOccurred(true); // Устанавливаем состояние ошибки
-                setIsLoading(false); // Сбрасываем состояние загрузки
+                setIsErrorOccurred(true);
+                setIsLoading(false);
                 return;
             }
-    
-            await createAnnouncement(); // Создание объявления
-            setIsAnnouncementCreated(true); // Устанавливаем состояние успешного создания
+
+            await createAnnouncement();
+            setIsAnnouncementCreated(true);
         } catch (error) {
             console.error('Ошибка:', error);
-            setIsErrorOccurred(true); // Устанавливаем состояние ошибки
+            setIsErrorOccurred(true);
         } finally {
-            setIsLoading(false); // Сбрасываем состояние загрузки
+            setIsLoading(false);
         }
     };
-    
 
     return (
         <div className={styles.CreatField}>
-            {isAnnouncementCreated ? ( // Если объявление создано
+            {isAnnouncementCreated ? (
                 <div className={styles.successMessage}>
                     <img src={checkmarkImage} alt="Галочка" className={styles.checkmarkImage} />
                     <h2>Объявление создано!</h2>
                 </div>
-            ) : isLoading ? ( // Если идет загрузка
+            ) : isLoading ? (
                 <div className={styles.successMessage}>
                     <img src={LoadCheckmarkImage} alt="Загрузка" className={styles.LoadcheckmarkImage} />
                     <h2>Объявление уже в пути!</h2>
                 </div>
-            ) : isErrorOccurred ? ( // Если произошла ошибка
+            ) : isErrorOccurred ? (
                 <div className={styles.successMessage}>
                     <img src={ErrorCheckmarkImage} alt="Крестик" className={styles.checkmarkImage} />
                     <h2 style={{color: "#be2731"}}>Нельзя создавать более 2х объявлений!</h2>
-                     <h3>Удалите старые объявления и попробуйте еще раз  (◕‿◕)</h3>
-
+                    <h3>Удалите старые объявления и попробуйте еще раз  (◕‿◕)</h3>
                 </div>
-            ) : ( // Обычный интерфейс для создания объявления
+            ) : (
                 <>
                     <h2>Создать объявление</h2>
                     <div className={styles.Selector_Cont}>
-                        <button className={styles.select_button} onClick={() => setIsCategoryModalOpen(true)}>
+                        <button
+                            className={`${styles.select_button} ${isCategoryError ? styles.redborder : ''}`} // Применяем класс для обводки
+                            onClick={() => setIsCategoryModalOpen(true)}
+                        >
                             {selectedCategory ? `Категория: ${selectedCategory}` : 'Выберите категорию'}
                         </button>
                         {isCategoryModalOpen && (
@@ -177,15 +193,19 @@ const CreateField = () => {
                     )}
 
                     <textarea
-                        className={styles.description_input}
+                        className={`${styles.description_input} ${isDescriptionError ? styles.redborder : ''}`}
                         placeholder="Описание, пожалуйста, обязательно укажите детали"
                         maxLength={150}
-                        value={announcements.description}
+                        value={description}  // Используем внутреннее состояние description
                         onClick={() => {
-                            setTitle(userData.username.toString());
+                            setTitle(userData.title.toString())
                         }}
                         onChange={(e) => {
-                            setDescription(e.target.value);
+                            setDescriptionState(e.target.value); // Используем локальную функцию
+                            setDescription(e.target.value); // Также передаем значение в AnnouncScript для сохранения
+                            if (e.target.value.trim()) {
+                                setIsDescriptionError(false);
+                            }
                         }}
                     />
 
