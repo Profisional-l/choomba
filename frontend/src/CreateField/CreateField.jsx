@@ -89,7 +89,7 @@ const CreateField = () => {
         setIsLoading(true);
         setIsErrorOccurred(false);
 
-        const title = userData.title;
+        const title = userData.username;
         setTitle(title);
 
         try {
@@ -198,7 +198,7 @@ const CreateField = () => {
                         maxLength={150}
                         value={description}  // Используем внутреннее состояние description
                         onClick={() => {
-                            setTitle(userData.title.toString())
+                            setTitle(userData.username.toString());
                         }}
                         onChange={(e) => {
                             setDescriptionState(e.target.value); // Используем локальную функцию
