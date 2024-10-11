@@ -26,7 +26,7 @@ const CreateField = () => {
         activities: [
             { value: 'sport', label: 'Спорт' },
             { value: 'computerGames', label: 'Компьютерные игры' },
-            { value: 'computerGames', label: 'Мобильные игры' },
+            { value: 'mobileGames', label: 'Мобильные игры' },
             { value: 'entertainment', label: 'Развлечения' }
         ],
         sport: ['Футбол', 'Баскетбол', 'Волейбол', 'Теннис', 'Хоккей', 'Другое'],
@@ -178,7 +178,7 @@ const CreateField = () => {
 
                     <textarea
                         className={styles.description_input}
-                        placeholder="Описание"
+                        placeholder="Описание, пожалуйста, обязательно укажите детали"
                         maxLength={150}
                         value={announcements.description}
                         onClick={() => {
