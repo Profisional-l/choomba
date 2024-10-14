@@ -33,6 +33,7 @@ const categories = [
       "Brawl Stars",
       "PUBG Mobile",
       "Standoff 2",
+      "Call of Duty Mobile",
       "Free Fire",
       "League of Legends",
       "Genshin Impact",

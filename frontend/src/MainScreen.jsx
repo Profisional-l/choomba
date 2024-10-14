@@ -16,6 +16,7 @@ import overwatchImage from  './assets/subcat_pictures/overwatch.png';
 import brawlstarsImage from  './assets/subcat_pictures/brawlstars.png';
 import pubgmobileImage from  './assets/subcat_pictures/pubgmobile.png';
 import standoffImage from  './assets/subcat_pictures/standoff.png';
+import callofdutymobileImage from  './assets/subcat_pictures/callofdutymobile.png';
 import freefireImage from  './assets/subcat_pictures/freefire.png';
 import lolImage from  './assets/subcat_pictures/lol.png';
 import genshinImage from  './assets/subcat_pictures/genshin.png';
@@ -67,6 +68,7 @@ const imageMap = {
     'Overwatch': overwatchImage,
     'Brawl Stars': brawlstarsImage,
     'PUBG Mobile': pubgmobileImage,
+    'Call of Duty Mobile': callofdutymobileImage,
     'Standoff 2': standoffImage,
     'Free Fire': freefireImage,
     'League of Legends': lolImage,

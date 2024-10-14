@@ -34,7 +34,7 @@ const CreateField = () => {
         ],
         sport: ['Футбол', 'Баскетбол', 'Волейбол', 'Теннис', 'Хоккей', 'Другое'],
         computerGames: ['CS2', 'Dota 2', 'PUBG', 'Fortnite', 'Warzone', 'Apex Legends', 'Valorant', 'Другие игры'],
-        mobileGames: ['Brawl Stars', 'PUBG Mobile', 'Standoff 2', 'Free Fire', 'League of Legends', 'Другие игры'],
+        mobileGames: ['Brawl Stars', 'PUBG Mobile', 'Standoff 2', 'Call of Duty Mobile', 'Free Fire', 'League of Legends', 'Другие игры'],
         entertainment: ['Кино', 'Квизы', 'Настольные игры', 'Концерты', 'Квесты', 'Просто прогулка', 'Другое']
     };
 
